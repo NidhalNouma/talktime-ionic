@@ -1,0 +1,7 @@
+{
+  "name": "Talktime",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
