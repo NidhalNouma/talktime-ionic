@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "talktime",
+  "description": "Talk time (P2P audio chat using WebRTC)",
+  "version": "1.0.0",
+  "author": "NN",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "custom-error": "^0.2.1",
+    "express": "^4.17.1",
+    "simple-peer": "^8.1.0",
+    "socket.io": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "keywords": [
+    "p2p",
+    "webrtc",
+    "data channel",
+    "audio chat"
+  ],
+  "license": "MIT",
+  "main": "app.js",
+  "scripts": {
+    "build": "cd public & npm run build",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "gdeploy": "gcloud run deploy --image gcr.io/talktime-57dc9/talktime_simplepeer",
+    "gbuild": "gcloud builds submit --tag gcr.io/talktime-57dc9/talktime_simplepeer"
+  }
+}

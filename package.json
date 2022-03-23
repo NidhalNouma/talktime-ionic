@@ -52,7 +52,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "cd server && npm start",
+    "i-server": "cd server && npm install --only=production"
   },
   "eslintConfig": {
     "extends": [
@@ -77,5 +79,5 @@
     "@types/simple-peer": "^9.11.4"
   },
   "description": "Talktime",
-  "proxy": "https://talktime.us"
+  "proxy": "http://localhost:8080"
 }
