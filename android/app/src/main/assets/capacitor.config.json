@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Talktime",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

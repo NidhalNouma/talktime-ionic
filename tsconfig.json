@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,7 +16,20 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+
+  "resolve": {
+    "fallback": {
+      //     "fs": false,
+      //     "tls": false,
+      //     "net": false,
+      //     "http": require.resolve("stream-http"),
+      //     "https": false,
+      //     "zlib": require.resolve("browserify-zlib") ,
+      //     "path": require.resolve("path-browserify"),
+      //     "stream": require.resolve("stream-browserify"),
+      "util": false,
+      "crypto": false
+    }
+  }
 }

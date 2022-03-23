@@ -1,0 +1,14 @@
+.waveAndLoader {
+  margin: auto 0;
+}
+
+.spinner {
+  color: var(--ion-color-secondary);
+  width: 80px;
+  height: 80px;
+}
+
+.waves {
+  display: flex;
+  flex-direction: column;
+}
