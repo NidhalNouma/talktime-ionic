@@ -54,7 +54,9 @@
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",
     "server": "cd server && npm start",
-    "i-server": "cd server && npm install --only=production"
+    "i-server": "cd server && npm install --only=production",
+    "gdeploy": "gcloud run deploy --image gcr.io/talktime-57dc9/talktime_simplepeer",
+    "gbuild": "gcloud builds submit --tag gcr.io/talktime-57dc9/talktime_simplepeer"
   },
   "eslintConfig": {
     "extends": [
