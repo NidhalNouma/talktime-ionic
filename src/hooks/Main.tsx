@@ -1,7 +1,7 @@
 import Peer from "simple-peer";
-// import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import { useState, useEffect, useRef } from "react";
+import { MediaCapture } from "@awesome-cordova-plugins/media-capture";
 
 const Main = (
   type: Number,
@@ -165,6 +165,11 @@ const Main = (
         console.error(err);
         window.alert("Please enable the microphone to use this app.");
       });
+
+    // MediaCapture.captureAudio().then(
+    //   (data: any) => console.log(data),
+    //   (err: any) => console.error(err)
+    // );
   };
 
   return { startCall };

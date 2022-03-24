@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Clipboard } from "@awesome-cordova-plugins/clipboard";
 // import cryptoRandomString from "crypto-random-string";
 const bcrypt = require("bcryptjs");
 
@@ -44,14 +45,23 @@ export function cuid() {
 
 export function copyToClipboard(text: String, done: Function) {
   const getUrl = window.location.origin + "/talk/" + text;
-  navigator.clipboard.writeText(getUrl).then(
+  Clipboard.copy(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");
       done("Copied", 1);
     },
     function (err) {
       console.error("Async: Could not copy text: ", err);
-      done("Could not copy text", -1);
+      navigator.clipboard.writeText(getUrl).then(
+        function () {
+          console.log("Async: Copying to clipboard was successful!");
+          done("Copied", 1);
+        },
+        function (err) {
+          console.error("Async: Could not copy text: ", err);
+          done("Could not copy text", -1);
+        }
+      );
     }
   );
 }
