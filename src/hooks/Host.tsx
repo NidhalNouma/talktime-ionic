@@ -42,14 +42,16 @@ export function cuid() {
   return id;
 }
 
-export function copyToClipboard(text: String) {
-  const getUrl = window.location;
-  navigator.clipboard.writeText(getUrl.protocol + "//" + text).then(
+export function copyToClipboard(text: String, done: Function) {
+  const getUrl = window.location.origin + "/talk/" + text;
+  navigator.clipboard.writeText(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");
+      done("Copied", 1);
     },
     function (err) {
       console.error("Async: Could not copy text: ", err);
+      done("Could not copy text", -1);
     }
   );
 }

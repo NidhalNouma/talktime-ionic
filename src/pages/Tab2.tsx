@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import { IonContent, IonPage } from "@ionic/react";
 import Nav from "../components/navbar/Nav";
@@ -10,28 +10,36 @@ import Call, { Mute, stopAudioOnly } from "../hooks/Call";
 import Main from "../hooks/Main";
 import { uid, copyToClipboard } from "../hooks/Host";
 
+import { ShowToast } from "../App";
 import "./Tab2.css";
 
-const Tab1: React.FC = () => {
+interface tabProps {
+  incall: Boolean;
+  setIncall: Function;
+}
+
+const Tab2: React.FC<tabProps> = ({ incall, setIncall }) => {
   const { getId, resetId } = uid("hostId");
   const [id, setID] = useState(getId);
 
   const [lstream, setLStream] = useState(null);
   const [rstream, setRStream] = useState(null);
-  const [incall, setIncall] = useState(false);
 
   const audio = useRef<any>(null);
 
   const { state, click, btnText, answer, close } = Call(0);
-  const { startCall } = Main(state, close, setLStream, setRStream, 0);
+  const { startCall } = Main(state, close, setLStream, setRStream, id);
   const { muted, unmute, mute } = Mute();
+
+  const { openToast } = useContext(ShowToast);
 
   useEffect(() => {
     if (state === 0) {
+      if (incall) {
+        stopAudioOnly(rstream);
+        openToast("Disconnected", -1);
+      }
       stopAudioOnly(lstream);
-      stopAudioOnly(rstream);
-
-      // incall && notify("Disconnected", false);
       setIncall(false);
       unmute();
     }
@@ -40,7 +48,7 @@ const Tab1: React.FC = () => {
   useEffect(() => {
     if (startCall) {
       answer();
-      // notify("Connected");
+      openToast("Connected");
       setIncall(true);
 
       if (audio.current) audio.current.srcObject = rstream;
@@ -65,9 +73,14 @@ const Tab1: React.FC = () => {
             <HostUrl
               id={id}
               copyId={() => {
-                copyToClipboard(id);
+                copyToClipboard(id, (message: string, type: Number) =>
+                  openToast(message, type)
+                );
               }}
-              setId={() => setID(resetId(id))}
+              setId={() => {
+                setID(resetId(id));
+                openToast("Deleted", -1);
+              }}
             />
           </div>
           <WaveAndLoader type={state} lstream={lstream} rstream={rstream} />
@@ -91,4 +104,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default Tab2;

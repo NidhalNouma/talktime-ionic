@@ -8,7 +8,7 @@ const Main = (
   close: Function,
   setStream: any,
   setRStream: any,
-  id: Number
+  id: string
 ) => {
   const [startCall, setStartCall] = useState(false);
 

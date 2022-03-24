@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { useParams } from "react-router-dom";
 
 import { IonContent, IonPage } from "@ionic/react";
 import Nav from "../components/navbar/Nav";
@@ -8,27 +9,38 @@ import WaveAndLoader from "../components/waveAndLoader";
 import Call, { Mute, stopAudioOnly } from "../hooks/Call";
 import Main from "../hooks/Main";
 
+import { ShowToast } from "../App";
 import "./Tab1.css";
 
-const Tab1: React.FC = () => {
+interface tabProps {
+  incall: Boolean;
+  setIncall: Function;
+}
+
+const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
   const [lstream, setLStream] = useState(null);
   const [rstream, setRStream] = useState(null);
-  const [incall, setIncall] = useState(false);
 
   const audio = useRef<any>(null);
+  type params = {
+    id: string;
+  };
+  const { id } = useParams<params>();
 
   const { state, click, btnText, answer, close } = Call(0);
-  const { startCall } = Main(state, close, setLStream, setRStream, 0);
+  const { startCall } = Main(state, close, setLStream, setRStream, id);
   const { muted, unmute, mute } = Mute();
+
+  const { openToast } = useContext(ShowToast);
 
   useEffect(() => {
     if (state === 0) {
       if (incall) {
-        stopAudioOnly(lstream);
         stopAudioOnly(rstream);
+        openToast("Disconnected", -1);
       }
 
-      // incall && notify("Disconnected", false);
+      stopAudioOnly(lstream);
       setIncall(false);
       unmute();
     }
@@ -37,7 +49,7 @@ const Tab1: React.FC = () => {
   useEffect(() => {
     if (startCall) {
       answer();
-      // notify("Connected");
+      openToast("Connected");
       setIncall(true);
 
       if (audio.current) audio.current.srcObject = rstream;
