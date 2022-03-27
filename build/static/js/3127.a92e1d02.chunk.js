@@ -1,3 +1,0 @@
-/*! For license information please see 3127.a92e1d02.chunk.js.LICENSE.txt */
-"use strict";(self.webpackChunktalktime=self.webpackChunktalktime||[]).push([[3127],{3127:function(t,e,n){n.r(e),n.d(e,{i:function(){return r}});var r=function(t){return t&&""!==t.dir?"rtl"===t.dir.toLowerCase():"rtl"===(null===document||void 0===document?void 0:document.dir.toLowerCase())}}}]);
-//# sourceMappingURL=3127.a92e1d02.chunk.js.map

@@ -18,5 +18,8 @@ RUN cd server && npm install && cd ..
 # Copy local code to the container image.
 COPY . ./
 
+RUN npm install
+RUN npm run build
+
 # Run the web service on container startup.
 CMD [ "node", "./server/app.js" ]
