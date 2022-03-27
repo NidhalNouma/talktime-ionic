@@ -26,12 +26,18 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
     id: string;
   };
   const { id } = useParams<params>();
+  const { openToast } = useContext(ShowToast);
 
   const { state, click, btnText, answer, close } = Call(0);
-  const { startCall } = Main(state, close, setLStream, setRStream, id);
+  const { startCall } = Main(
+    state,
+    close,
+    setLStream,
+    setRStream,
+    id,
+    (msg: string, ty: number = 1) => openToast(msg, ty)
+  );
   const { muted, unmute, mute } = Mute();
-
-  const { openToast } = useContext(ShowToast);
 
   useEffect(() => {
     if (state === 0) {
@@ -63,7 +69,9 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
         <div className="App">
           <Nav />
           <div className="ion-text-center ion-margin-top">
-            <h3>Find someone to talk to.</h3>
+            <h3>
+              {!id ? "Find someone to talk to." : "Join the private room"}
+            </h3>
           </div>
           <WaveAndLoader type={state} lstream={lstream} rstream={rstream} />
           <CallButton

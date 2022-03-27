@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Clipboard } from "@awesome-cordova-plugins/clipboard";
-// import cryptoRandomString from "crypto-random-string";
-const bcrypt = require("bcryptjs");
+import { URL } from "../constant";
+var randomString = require("random-string");
 
 export function uid(name: String | any) {
   function setIdToStorqge(id: String | any) {
@@ -38,13 +38,18 @@ async function deleteId(id: String) {
 }
 
 export function cuid() {
-  //   const id = cryptoRandomString({ length: 10 });
-  const id = bcrypt.genSaltSync(10);
+  const id = randomString({
+    length: 20,
+    numeric: true,
+    letters: true,
+    special: false,
+    exclude: ["/"],
+  });
   return id;
 }
 
 export function copyToClipboard(text: String, done: Function) {
-  const getUrl = window.location.origin + "/talk/" + text;
+  const getUrl = URL + "/talk/" + text;
   Clipboard.copy(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");

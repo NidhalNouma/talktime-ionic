@@ -19,19 +19,25 @@ interface tabProps {
 }
 
 const Tab2: React.FC<tabProps> = ({ incall, setIncall }) => {
-  const { getId, resetId } = uid("hostId");
+  const { getId, resetId } = uid("host_ID");
   const [id, setID] = useState(getId);
 
   const [lstream, setLStream] = useState(null);
   const [rstream, setRStream] = useState(null);
 
   const audio = useRef<any>(null);
+  const { openToast } = useContext(ShowToast);
 
   const { state, click, btnText, answer, close } = Call(0);
-  const { startCall } = Main(state, close, setLStream, setRStream, id);
+  const { startCall } = Main(
+    state,
+    close,
+    setLStream,
+    setRStream,
+    id,
+    (msg: string, ty: number = 1) => openToast(msg, ty)
+  );
   const { muted, unmute, mute } = Mute();
-
-  const { openToast } = useContext(ShowToast);
 
   useEffect(() => {
     if (state === 0) {

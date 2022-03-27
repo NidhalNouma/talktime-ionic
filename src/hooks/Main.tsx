@@ -1,14 +1,15 @@
 import Peer from "simple-peer";
 import { io } from "socket.io-client";
 import { useState, useEffect, useRef } from "react";
-import { MediaCapture } from "@awesome-cordova-plugins/media-capture";
+import { URL } from "../constant";
 
 const Main = (
   type: Number,
   close: Function,
   setStream: any,
   setRStream: any,
-  id: string
+  id: string,
+  show: Function
 ) => {
   const [startCall, setStartCall] = useState(false);
 
@@ -18,7 +19,7 @@ const Main = (
 
   useEffect(() => {
     if (type === 1) {
-      setSocket(io({ reconnectionDelayMax: 10000, query: { id } }));
+      setSocket(io(URL, { reconnectionDelayMax: 10000, query: { id } }));
 
       console.log("start ....");
     } else if (type === 0) {
@@ -151,25 +152,26 @@ const Main = (
   }, [socket]);
 
   const getMediaUser = (next: Function, fn: Function) => {
-    navigator.mediaDevices
-      .getUserMedia({
-        audio: true,
-      })
-      .then(function (s) {
-        fn(s);
-        setStream(s);
+    console.log("Getting/requesting audio permission ...");
+    const constraints = { audio: true };
 
-        next();
-      })
-      .catch(function (err) {
-        console.error(err);
-        window.alert("Please enable the microphone to use this app.");
-      });
+    if (navigator.mediaDevices) {
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(function (s) {
+          // show("passed .. connect data --");
+          fn(s);
+          setStream(s);
 
-    // MediaCapture.captureAudio().then(
-    //   (data: any) => console.log(data),
-    //   (err: any) => console.error(err)
-    // );
+          next();
+        })
+        .catch(function (err) {
+          console.error(err);
+          window.alert("Please enable the microphone to use this app.");
+        });
+    } else {
+      show("Can not access this device microphone!", -1);
+    }
   };
 
   return { startCall };
