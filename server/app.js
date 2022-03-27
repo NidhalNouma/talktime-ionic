@@ -39,13 +39,13 @@ app.post("/host/d/:id", (req, res) => {
   res.send(r);
 });
 
-app.get("/l/:id", (req, res) => {
+app.get("/talk/:id", (req, res) => {
   const id = req.params.id;
 
   const host = arrHosts.find((host) => host === id);
   if (host) {
-    return res.sendFile(path.join(__dirname, "public/build/index.html"));
-  } else return res.redirect("/host");
+    return res.sendFile(path.join(__dirname, "../build/index.html"));
+  } else return res.redirect("/talk");
 });
 
 app.get("*", (req, res) => {

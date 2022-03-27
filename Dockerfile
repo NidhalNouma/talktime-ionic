@@ -18,6 +18,7 @@ RUN cd server && npm install && cd ..
 # Copy local code to the container image.
 COPY . ./
 
+# Install and build the react app.
 RUN npm install
 RUN npm run build
 

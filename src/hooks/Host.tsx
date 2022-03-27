@@ -13,6 +13,7 @@ export function uid(name: String | any) {
     deleteId(id);
     const nid = cuid();
     setIdToStorqge(nid);
+    postId(nid);
 
     return nid;
   }
@@ -28,12 +29,12 @@ export function uid(name: String | any) {
 }
 
 async function postId(id: String) {
-  const r = await axios.post(`/host/${id}`);
+  const r = await axios.post(`${URL}/host/${id}`);
   console.log(r.data);
 }
 
 async function deleteId(id: String) {
-  const r = await axios.post(`/host/d/${id}`);
+  const r = await axios.post(`${URL}/host/d/${id}`);
   console.log(r.data);
 }
 
