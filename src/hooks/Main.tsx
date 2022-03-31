@@ -101,7 +101,7 @@ const Main = (
           const ice = await axios.post(URL+"/getIce");
            const credential = ice.data.v.iceServers.credential;
            const username = ice.data.v.iceServers.username;
-           const servers = ice.data.v.iceServers.urls.map((i) => {
+           const servers = ice.data.v.iceServers.urls.map((i:any) => {
              return {
                urls: i,
                credential,
