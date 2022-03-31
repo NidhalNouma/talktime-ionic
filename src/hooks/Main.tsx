@@ -1,5 +1,6 @@
 import Peer from "simple-peer";
 import { io } from "socket.io-client";
+import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { URL } from "../constant";
 
@@ -95,23 +96,23 @@ const Main = (
         data = data || {};
 
         let config = {};
-        // console.log("geting ice ...");
-        // try {
-        //   const ice = await axios.post("/getIce");
-        //   const credential = ice.data.v.iceServers.credential;
-        //   const username = ice.data.v.iceServers.username;
-        //   const servers = ice.data.v.iceServers.urls.map((i) => {
-        //     return {
-        //       urls: i,
-        //       credential,
-        //       username,
-        //     };
-        //   });
-        //   config = { iceServers: servers };
-        //   console.log(config, ice);
-        // } catch (err) {
-        //   console.error("get ice error", err);
-        // }
+         console.log("geting ice ...");
+         try {
+          const ice = await axios.post(URL+"/getIce");
+           const credential = ice.data.v.iceServers.credential;
+           const username = ice.data.v.iceServers.username;
+           const servers = ice.data.v.iceServers.urls.map((i) => {
+             return {
+               urls: i,
+               credential,
+               username,
+             };
+           });
+           config = { iceServers: servers };
+           console.log(config, ice);
+         } catch (err) {
+           console.error("get ice error", err);
+         }
 
         peer.current = new Peer({
           initiator: !!data.initiator,
