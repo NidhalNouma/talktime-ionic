@@ -101,7 +101,6 @@ const Tab2: React.FC<tabProps> = ({ incall, setIncall }) => {
         <audio
           ref={audio}
           style={{ display: "none" }}
-          volume="true"
           autoPlay
           muted={muted}
         ></audio>
