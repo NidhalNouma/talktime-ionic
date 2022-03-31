@@ -67,7 +67,7 @@ const App: React.FC = () => {
               <Route exact path="/host">
                 <Tab2 incall={incall} setIncall={setIncall} />
               </Route>
-              <Route exact path="/">
+              <Route exact path="*">
                 <Redirect to="/talk" />
               </Route>
             </IonRouterOutlet>

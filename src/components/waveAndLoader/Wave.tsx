@@ -43,8 +43,8 @@ const Wave: React.FC<ContainerProps> = ({ lstream, stream }) => {
 
   return (
     <div className="waves">
-      <canvas style={{ maxHeight: "130px" }} id="wave"></canvas>
-      <canvas style={{ maxHeight: "130px" }} id="lwave"></canvas>
+      <canvas style={{ maxHeight: "110px" }} id="wave"></canvas>
+      <canvas style={{ maxHeight: "110px" }} id="lwave"></canvas>
     </div>
   );
 };

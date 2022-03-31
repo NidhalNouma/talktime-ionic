@@ -57,10 +57,13 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
       answer();
       openToast("Connected");
       setIncall(true);
+    }
 
+    if (rstream) {
       if (audio.current) audio.current.srcObject = rstream;
     }
-  }, [startCall]);
+
+  }, [startCall, rstream]);
 
   return (
     <IonPage>
@@ -85,7 +88,7 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
         <audio
           ref={audio}
           style={{ display: "none" }}
-          // volume="true"
+          volume="true"
           autoPlay
           muted={muted}
         ></audio>

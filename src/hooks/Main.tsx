@@ -159,7 +159,6 @@ const Main = (
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (s) {
-          // show("passed .. connect data --");
           fn(s);
           setStream(s);
 
