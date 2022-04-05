@@ -1,0 +1,38 @@
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* width: 100%; */
+  /* height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(48, 46, 49);
+  z-index: 20013;
+}
+.menu .buttonmenu {
+  background-color: transparent;
+  margin: 0;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu .iconi {
+  width: 26px;
+  height: 26px;
+  color: #fff;
+}
+
+.menu .menuA {
+  text-decoration: none;
+  /* color: #fff; */
+}
+
+.menu h1 {
+  color: #fff;
+}

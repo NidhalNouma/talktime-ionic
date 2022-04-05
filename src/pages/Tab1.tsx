@@ -37,7 +37,7 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
     id,
     (msg: string, ty: number = 1) => openToast(msg, ty)
   );
-  const { muted, unmute, mute } = Mute();
+  const { muted, unmute, mute } = Mute(lstream);
 
   useEffect(() => {
     if (state === 0) {
@@ -62,12 +62,10 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
     if (rstream) {
       if (audio.current) audio.current.srcObject = rstream;
     }
-
   }, [startCall, rstream]);
 
   return (
     <IonPage>
-      {/* <IonHeader><Nav /></IonHeader> */}
       <IonContent fullscreen>
         <div className="App">
           <Nav />
@@ -89,7 +87,7 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
           ref={audio}
           style={{ display: "none" }}
           autoPlay
-          muted={muted}
+          // muted={muted}
         ></audio>
       </IonContent>
     </IonPage>

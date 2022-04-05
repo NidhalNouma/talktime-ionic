@@ -57,16 +57,21 @@ function Call(start: any) {
 
 export default Call;
 
-export function Mute() {
+export function Mute(stream: any) {
   const [muted, setMuted] = useState<boolean>(false);
 
   function unmute() {
+    muteMic(stream, true);
     setMuted(false);
   }
 
   function mute() {
     setMuted(!muted);
   }
+
+  useEffect(() => {
+    if (stream) muteMic(stream, !muted);
+  }, [muted, stream]);
 
   return { muted, unmute, mute };
 }
@@ -78,4 +83,8 @@ export function stopAudioOnly(stream: any) {
       console.log("st", stream);
     });
   }
+}
+
+export function muteMic(stream: any, mute: boolean) {
+  stream?.getAudioTracks()?.forEach((track: any) => (track.enabled = mute));
 }

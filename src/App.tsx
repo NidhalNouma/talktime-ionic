@@ -71,19 +71,18 @@ const App: React.FC = () => {
                 <Redirect to="/talk" />
               </Route>
             </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              {!incall && (
-                <IonTabButton tab="Talk" href="/talk">
-                  <IonIcon icon={call} />
-                  <IonLabel>Talk</IonLabel>
-                </IonTabButton>
-              )}
-              {!incall && (
-                <IonTabButton tab="Host" href="/host">
-                  <IonIcon icon={people} />
-                  <IonLabel>Host</IonLabel>
-                </IonTabButton>
-              )}
+            <IonTabBar
+              slot="bottom"
+              style={{ display: `${incall ? "none" : "flex"}` }}
+            >
+              <IonTabButton tab="Talk" href="/talk">
+                <IonIcon icon={call} />
+                <IonLabel>Talk</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Host" href="/host">
+                <IonIcon icon={people} />
+                <IonLabel>Host</IonLabel>
+              </IonTabButton>
             </IonTabBar>
           </IonTabs>
           <Toast

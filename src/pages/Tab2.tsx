@@ -19,7 +19,7 @@ interface tabProps {
 }
 
 const Tab2: React.FC<tabProps> = ({ incall, setIncall }) => {
-  const { getId, resetId } = uid("host_ID");
+  const { getId, resetId } = uid("host_ID_1");
   const [id, setID] = useState(getId);
 
   const [lstream, setLStream] = useState(null);
@@ -37,7 +37,7 @@ const Tab2: React.FC<tabProps> = ({ incall, setIncall }) => {
     id,
     (msg: string, ty: number = 1) => openToast(msg, ty)
   );
-  const { muted, unmute, mute } = Mute();
+  const { muted, unmute, mute } = Mute(lstream);
 
   useEffect(() => {
     if (state === 0) {
@@ -102,7 +102,7 @@ const Tab2: React.FC<tabProps> = ({ incall, setIncall }) => {
           ref={audio}
           style={{ display: "none" }}
           autoPlay
-          muted={muted}
+          // muted={muted}
         ></audio>
       </IonContent>
     </IonPage>

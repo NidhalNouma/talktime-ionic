@@ -1,6 +1,4 @@
 const http = require("http");
-// const https = require("https");
-const axios = require("axios");
 const express = require("express");
 const app = express();
 const port = process.argv[2] || 8080;
@@ -50,11 +48,6 @@ app.get("/talk/:id", (req, res) => {
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
-});
-
-app.post("/getIce", async (req, res) => {
-  const r = await getIce();
-  res.json(r);
 });
 
 const server = http.createServer(app);
@@ -194,35 +187,3 @@ function broadcast(message, hostId) {
 server.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-async function getIce() {
-  let o = {
-    format: "urls",
-  };
-
-  const secret = "3a640dd8-40e8-11ec-908a-0242ac130006";
-
-  let bodyString = JSON.stringify(o);
-  let options = {
-    method: "PUT",
-    url: "https://global.xirsys.net/_turn/Talktime",
-    data: o,
-    headers: {
-      Authorization:
-        "Basic " + Buffer.from(`talktime:${secret}`).toString("base64"),
-      "Content-Type": "application/json",
-      "Content-Length": bodyString.length,
-    },
-  };
-
-  let r = null;
-  try {
-    r = await axios(options);
-
-    r = r.data;
-  } catch (e) {
-    console.error("error: ", e);
-  }
-
-  return r;
-}

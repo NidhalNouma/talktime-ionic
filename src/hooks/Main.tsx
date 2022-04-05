@@ -1,6 +1,5 @@
 import Peer from "simple-peer";
 import { io } from "socket.io-client";
-import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { URL } from "../constant";
 
@@ -68,18 +67,15 @@ const Main = (
         if (message.type === "signal") {
           handleSignal(message.data);
         } else if (message.type === "count") {
-          // console.log(message.data);
+          console.log(message.data);
         } else if (message.type === "end") {
-          next(null);
+          next();
         } else if (message.type === "peer") {
           handlePeer(message.data);
         }
       };
 
-      const next = (event: any) => {
-        if (event && event.preventDefault) {
-          event.preventDefault();
-        }
+      const next = () => {
         if (peer && peer.current) {
           console.log("ok");
           if (socket && socket.connected)
