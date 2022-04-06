@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-const st = "dialling";
+const st = "dialing";
 const ss = sessionStorage.getItem(st);
 const ist = ss ? parseInt(ss) : 0;
 
 function Call(start: any) {
   const [state, setState] = useState<Number | any>(start !== 0 ? start : ist);
   const [btnText, setBtnText] = useState(
-    ist === 1 || start !== 0 ? "Dialling" : "Call"
+    ist === 1 || start !== 0 ? "Dialing" : "Call"
   );
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function Call(start: any) {
     switch (state) {
       case 0: {
         setState(1);
-        setBtnText("Dialling");
+        setBtnText("Dialing");
         break;
       }
       case 2: {

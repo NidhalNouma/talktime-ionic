@@ -22,6 +22,7 @@ export function uid(name: String | any) {
     let iid = localStorage.getItem(name);
     if (!iid) iid = cuid();
 
+    // postId(iid!.toString());
     return iid!.toString();
   }
 

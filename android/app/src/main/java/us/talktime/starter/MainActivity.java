@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package us.talktime.starter;
 
 import com.getcapacitor.BridgeActivity;
 

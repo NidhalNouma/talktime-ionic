@@ -71,7 +71,7 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
           <Nav />
           <div className="ion-text-center ion-margin-top">
             <h3>
-              {!id ? "Find someone to talk to." : "Join the private room"}
+              {!id ? "Find someone to talk to." : "Join the private room."}
             </h3>
           </div>
           <WaveAndLoader type={state} lstream={lstream} rstream={rstream} />
