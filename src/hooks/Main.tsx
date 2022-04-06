@@ -45,9 +45,9 @@ const Main = (
         console.error("[socket error]", err.stack || err.message || err);
       });
 
-      socket.on("connect", function () {
+      socket.on("connect", async function () {
         // console.log("id ==>", socket.id, socket);
-        getMediaUser(next, (s: any) => (stream = s));
+        await getMediaUser(next, (s: any) => (stream = s));
       });
 
       socket.onAny((evtName: String, message: String) =>
@@ -141,7 +141,7 @@ const Main = (
     }
   }, [socket]);
 
-  const getMediaUser = (next: Function, fn: Function) => {
+  const getMediaUser = async (next: Function, fn: Function) => {
     console.log("Getting/requesting audio permission ...");
     const constraints = { audio: true };
 
@@ -156,7 +156,7 @@ const Main = (
         })
         .catch(function (err) {
           console.error(err);
-          window.alert("Please enable the microphone to use this app.");
+          show("Can not access this device microphone!", -1);
         });
     } else {
       show("Can not access this device microphone!", -1);
