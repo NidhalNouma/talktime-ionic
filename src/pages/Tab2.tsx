@@ -73,7 +73,7 @@ const Tab2: React.FC<tabProps> = ({ incall, setIncall }) => {
       {/* <IonHeader><Nav /></IonHeader> */}
       <IonContent fullscreen>
         <div className="App">
-          <Nav />
+          <Nav block={close} />
           <div className="ion-text-center ion-margin-top full-width">
             <h3>Host a private room.</h3>
             <HostUrl

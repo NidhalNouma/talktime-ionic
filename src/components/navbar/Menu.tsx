@@ -6,9 +6,10 @@ import "./Menu.css";
 
 interface MenuProps {
   setClose: React.MouseEventHandler;
+  block: Function;
 }
 
-const Menu: React.FC<MenuProps> = ({ setClose }) => {
+const Menu: React.FC<MenuProps> = ({ setClose, block }) => {
   return (
     <div className="menu">
       <div className=""></div>
@@ -21,7 +22,15 @@ const Menu: React.FC<MenuProps> = ({ setClose }) => {
         <h1 className="link">Workout</h1>
       </a>
       {/* <button className="link"> */}
-      <h1>Block</h1>
+      <button
+        className="buttonmenu"
+        onClick={(e) => {
+          block(e);
+          setClose(e);
+        }}
+      >
+        <h1>Block</h1>
+      </button>
       {/* </button> */}
       <button className="buttonmenu" onClick={setClose}>
         <IonIcon icon={close} className="iconi" />

@@ -68,7 +68,7 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
     <IonPage>
       <IonContent fullscreen>
         <div className="App">
-          <Nav />
+          <Nav block={close} />
           <div className="ion-text-center ion-margin-top">
             <h3>
               {!id ? "Find someone to talk to." : "Join the private room."}

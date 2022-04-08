@@ -6,12 +6,16 @@ import Menu from "./Menu";
 
 import "./Nav.css";
 
-const Nav: React.FC = () => {
+interface navProps {
+  block: Function;
+}
+
+const Nav: React.FC<navProps> = ({ block }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <div className="nav">
-      {(isPlatform("ios") || isPlatform("android")) && (
+      {isPlatform("hybrid") && (
         <button className="buttoni" onClick={() => setOpenMenu(true)}>
           <IonIcon icon={menu} className="iconi" />
         </button>
@@ -27,7 +31,7 @@ const Nav: React.FC = () => {
         isOpen={openMenu}
         onDidDismiss={() => setOpenMenu(false)}
       >
-        <Menu setClose={() => setOpenMenu(false)} />
+        <Menu setClose={() => setOpenMenu(false)} block={block} />
       </IonModal>
       {/* {openMenu && <Menu setClose={() => setOpenMenu(false)} />} */}
     </div>
