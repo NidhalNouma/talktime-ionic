@@ -27,14 +27,11 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>${PRODUCT_NAME} allow microphone use</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>${PRODUCT_NAME} allow microphone use</string>
+	<string>Microphone is used in voice call</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
-		<string>voip</string>
+    <string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -50,8 +50,12 @@ export function cuid() {
   return id;
 }
 
-export function copyToClipboard(text: String, done: Function) {
-  const getUrl = URL + "/talk/" + text;
+export function copyToClipboard(
+  text: String,
+  done: Function,
+  withoutUrl: boolean = false
+) {
+  const getUrl = `${!withoutUrl ? URL + "/talk/" : ""}${text}`;
   Clipboard.copy(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");

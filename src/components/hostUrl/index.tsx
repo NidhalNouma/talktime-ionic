@@ -1,5 +1,5 @@
 import "./index.css";
-import { IonIcon, IonButton } from "@ionic/react";
+import { IonIcon } from "@ionic/react";
 import { copy, refresh } from "ionicons/icons";
 
 interface propsCallButton {

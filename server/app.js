@@ -1,7 +1,14 @@
 const http = require("http");
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+app.use(cors());
 const port = process.argv[2] || 8080;
+
+const photos = require("./photos");
+
+app.use("/p", photos);
 
 const path = require("path");
 app.use("/static", express.static(path.join(__dirname, "../build/static")));

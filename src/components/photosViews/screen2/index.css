@@ -1,0 +1,18 @@
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.btn {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0.7rem;
+}
+
+.div-date {
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.div-date::-webkit-scrollbar {
+  display: none;
+}
