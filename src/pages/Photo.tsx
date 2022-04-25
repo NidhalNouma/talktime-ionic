@@ -55,7 +55,7 @@ const Photo: React.FC<tabProps> = ({}) => {
               <img
                 src={url.url}
                 alt="img"
-                className={`${!reveal ? "blur" : ""} `}
+                className={`${!reveal ? "blur" : ""} img`}
               />
             </React.Fragment>
           )}

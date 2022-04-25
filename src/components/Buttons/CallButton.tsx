@@ -61,8 +61,9 @@ export const SnapButton: React.FC<propsSnapButton> = ({
         style={{ display: "none" }}
         type="file"
         accept="image/*"
-        capture="environment"
+        // capture="environment"
         ref={ref}
+        onClick={(e: any) => (e.target.value = null)}
         onChange={(e) => {
           if (e.target.files) onSelect(e.target.files[0]);
         }}
