@@ -9,14 +9,14 @@ WORKDIR /usr/src/app
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
 # Copying this first prevents re-running npm install on every code change.
-COPY package*.json ./
-COPY server ./server
+# COPY package*.json ./
+# COPY server ./server
 
-# Install production dependencies.
-RUN cd server && npm install && cd ..
 
 # Copy local code to the container image.
 COPY . ./
+# Install production dependencies.
+RUN cd server && npm install && cd ..
 
 # Install and build the react app.
 RUN npm install
