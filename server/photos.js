@@ -1,4 +1,8 @@
-const imgbbUploader = require("imgbb-uploader");
+// const imgbbUploader = require("imgbb-uploader");
+require("dotenv").config();
+const { uploadPhoto, deletePhoto } = require("./fire");
+
+console.log(process.env.APP_NAME);
 
 const express = require("express");
 const app = express();
@@ -6,7 +10,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.raw());
 
 app.get("/p/:id", function (req, res) {
@@ -32,16 +36,18 @@ app.post("/post", async function (req, res) {
   const expiration = new Date(expie);
   // console.log(expiration, date);
 
-  const options = {
-    apiKey: "8379f94d61683a24c3bf04fa8488ed80",
-    // expiration: expiration - Date.now(),
-    base64string: image,
-  };
+  // const options = {
+  //   apiKey: "8379f94d61683a24c3bf04fa8488ed80",
+  //   // expiration: expiration - Date.now(),
+  //   base64string: image,
+  // };
 
   try {
-    const p = await imgbbUploader(options);
+    // const p = await imgbbUploader(options);
+    const p = await uploadPhoto(image);
+    if (!p) res.send(null);
     const r = newPhoto(p.url, date, expiration, p.id);
-    // console.log(r);
+    console.log(r);
     res.json(r);
   } catch (err) {
     console.log(err);
@@ -57,6 +63,7 @@ app.post("/d/:id", (req, res) => {
     var index = photos.indexOf(p);
     if (index !== -1) {
       photos.splice(index, 1);
+      deletePhoto(r.id);
       r.delete = true;
     }
   }

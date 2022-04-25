@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { SnapButton } from "../../Buttons/CallButton";
 import Url from "./URL/Url";
-import { URL } from "../../../constant";
 
 import { copyToClipboard } from "../../../hooks/Host";
 import { ShowToast } from "../../../App";
@@ -16,11 +15,11 @@ interface sProps {
 
 const Screenf: React.FC<sProps> = ({ setImg, remove, url }) => {
   const { openToast } = useContext(ShowToast);
-  const id = URL + "/p/" + url;
+  const id = url;
 
   return (
     <React.Fragment>
-      <div className="ion-text-center ion-margin-top">
+      <div className="ion-text-center ion-margin-top full-width">
         <h3>Send photo to the future.</h3>
         <Url
           id={id}
@@ -40,7 +39,7 @@ const Screenf: React.FC<sProps> = ({ setImg, remove, url }) => {
       <SnapButton
         onSelect={(img: any) => {
           console.log(img);
-          setImg(img);
+          encodeImageFileAsURL(img, setImg);
         }}
         name="Snap"
       />
@@ -49,3 +48,14 @@ const Screenf: React.FC<sProps> = ({ setImg, remove, url }) => {
 };
 
 export default Screenf;
+
+function encodeImageFileAsURL(file: any, setImg: Function) {
+  var reader = new FileReader();
+  reader.onloadend = function () {
+    let nimg = reader?.result?.toString();
+    // .replace(/^data:image\/(jpg|gif|png|bmp|heic|jpeg);base64,/, "");
+    console.log("RESULT", nimg);
+    setImg(nimg);
+  };
+  reader.readAsDataURL(file);
+}

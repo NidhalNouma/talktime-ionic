@@ -2,6 +2,7 @@ import axios from "axios";
 import { URL } from "../constant";
 
 export async function postPhoto(img: any, date: any, setUrl: Function) {
+  if (!img) return null;
   const url = `${URL}/p/post`;
   const data = {
     image: img,

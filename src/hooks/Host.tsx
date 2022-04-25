@@ -53,9 +53,9 @@ export function cuid() {
 export function copyToClipboard(
   text: String,
   done: Function,
-  withoutUrl: boolean = false
+  photo: boolean = false
 ) {
-  const getUrl = `${!withoutUrl ? URL + "/talk/" : ""}${text}`;
+  const getUrl = `${!photo ? URL + "/talk/" : URL + "/p/"}${text}`;
   Clipboard.copy(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");

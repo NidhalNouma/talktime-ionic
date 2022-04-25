@@ -28,9 +28,8 @@ export default Screen1;
 function encodeImageFileAsURL(file: any, setImg: Function) {
   var reader = new FileReader();
   reader.onloadend = function () {
-    let nimg = reader?.result
-      ?.toString()
-      .replace(/^data:image\/(jpg|gif|png|bmp|heic|jpeg);base64,/, "");
+    let nimg = reader?.result?.toString();
+    // .replace(/^data:image\/(jpg|gif|png|bmp|heic|jpeg);base64,/, "");
     console.log("RESULT", nimg);
     setImg(nimg);
   };

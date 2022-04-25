@@ -4,7 +4,26 @@
 
 .img {
   margin: auto 0;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 80%;
   object-fit: cover;
+}
+
+.rev-div {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  max-width: 90%;
+}
+
+.flip-clock {
+  --fcc-flip-duration: 0.5s; /* transition duration when flip card */
+  --fcc-digit-block-width: 28px; /* digit card's width */
+  --fcc-digit-block-height: 40px; /* digit card's height */
+  --fcc-digit-font-size: 20px; /* font size of digit */
+  --fcc-digit-color: white; /* color of digit */
+  --fcc-background: black; /* digit card's background */
+  --fcc-label-color: #ffffff; /* time label's color */
+  --fcc-divider-color: #ffffff66; /* divider's color */
+  margin-left: 1rem;
 }

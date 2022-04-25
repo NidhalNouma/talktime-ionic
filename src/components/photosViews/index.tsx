@@ -26,14 +26,13 @@ const PhotosScreens: React.FC<sProps> = ({}) => {
   }, [url]);
 
   useEffect(() => {
+    if (img) setUrl(null);
     if (img && date)
       postPhoto(img, date, (u: any) => {
         if (u) setUrl(u);
-        else {
-          setImg(null);
-          setDate(null);
-          openToast("Image too big!", -1);
-        }
+        else openToast("Image too big!", -1);
+        setImg(null);
+        setDate(null);
       });
   }, [img, date]);
 

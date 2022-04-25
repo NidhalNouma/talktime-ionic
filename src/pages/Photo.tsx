@@ -51,7 +51,13 @@ const Photo: React.FC<tabProps> = ({}) => {
             />
           ) : (
             <React.Fragment>
-              <FlipClockCountdown to={reveal ? url.expire : url.reveal} />
+              <div className="rev-div">
+                <h4>{!reveal ? "View in" : "Deleted in"}</h4>
+                <FlipClockCountdown
+                  to={reveal ? url.expire : url.reveal}
+                  className="flip-clock"
+                />
+              </div>
               <img
                 src={url.url}
                 alt="img"
