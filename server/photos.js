@@ -71,6 +71,17 @@ app.post("/d/:id", (req, res) => {
   res.send(r);
 });
 
+var periode = 1000 * 60 * 60 * 24;
+setInterval(() => {
+  const time = new Date();
+  photos.forEach((v, index) => {
+    if (time > v.expie) {
+      photos.splice(index, 1);
+      deletePhoto(v.id);
+    }
+  });
+}, periode);
+
 module.exports = app;
 
 const photos = [];

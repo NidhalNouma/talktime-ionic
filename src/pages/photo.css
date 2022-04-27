@@ -16,7 +16,7 @@
   width: 100%;
   /* padding-bottom: 1rem; */
   height: 100%;
-  overflow: clip;
+  overflow: hidden;
   text-align: center;
 }
 
@@ -49,8 +49,9 @@
 }
 
 .AppP {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  /* padding-top: 0 !important;
+  padding-bottom: 0 !important; */
+  padding: 0 !important;
   justify-content: flex-start;
 }
 
@@ -58,16 +59,23 @@
   --fcc-flip-duration: 0.5s; /* transition duration when flip card */
   --fcc-digit-block-width: 24px; /* digit card's width */
   --fcc-digit-block-height: 30px; /* digit card's height */
-  --fcc-digit-font-size: 14px; /* font size of digit */
+  --fcc-digit-font-size: 12px; /* font size of digit */
   --fcc-background: black; /* digit card's background */
   --fcc-divider-color: none; /* divider's color */
   --fcc-label-color: white;
   --fcc-digit-color: white;
-  /* margin-left: 1rem; */
 }
 @media (prefers-color-scheme: light) {
   .flip-clock {
     --fcc-label-color: black;
     /* --fcc-digit-color: black; */
   }
+}
+
+._2aOn7 {
+  font-size: 12px;
+}
+
+h3 {
+  white-space: nowrap;
 }
