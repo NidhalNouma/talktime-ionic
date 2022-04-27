@@ -21,6 +21,7 @@
 }
 
 .contain-d {
+  margin: 0 auto;
   position: absolute;
   top: 0;
   left: 0;
@@ -32,11 +33,13 @@
   text-align: center;
   height: 100%;
   padding-bottom: 3rem;
+  width: 50%;
 }
 
 @media only screen and (max-width: 800px) {
   .contain-d {
     padding-bottom: 2rem;
+    width: 100%;
   }
 }
 
@@ -49,8 +52,7 @@
 }
 
 .AppP {
-  /* padding-top: 0 !important;
-  padding-bottom: 0 !important; */
+  width: 100% !important;
   padding: 0 !important;
   justify-content: flex-start;
 }

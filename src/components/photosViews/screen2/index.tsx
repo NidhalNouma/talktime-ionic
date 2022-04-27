@@ -18,10 +18,6 @@ const Screen2: React.FC<sProps> = ({ setDate, back }) => {
   const [custom, setCustom] = useState(false);
   const [cdate, setCDate] = useState<string>("");
 
-  //   React.useEffect(() => {
-  //     console.log(new Date(cdate));
-  //   }, [cdate]);
-
   return (
     <React.Fragment>
       <div className="ion-text-center ion-margin-top mb-auto">
@@ -42,20 +38,13 @@ const Screen2: React.FC<sProps> = ({ setDate, back }) => {
         ) : (
           <React.Fragment>
             <IonDatetime
-              //   hour-cycle="h12"
-              //   locale="en-GB"
-              //   isDateDisabled={(dateIsoString: string) => {
-              //     const date = new Date(dateIsoString);
-              //     const now = new Date(Date.now());
-              //     if (now < date) {
-              //       // Disables January 1, 2022.
-              //       return false;
-              //     }
-              //     return true;
-              //   }}
+              className="date-picker"
               onIonChange={(e: any) => setCDate(e.detail.value!)}
             ></IonDatetime>
-            <button className="btn" onClick={() => setDate(new Date(cdate))}>
+            <button
+              className="btn"
+              onClick={() => setDate(cdate ? new Date(cdate) : new Date())}
+            >
               Next
             </button>
           </React.Fragment>

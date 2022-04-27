@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { IonContent, IonPage } from "@ionic/react";
-// import Nav from "../components/navbar/Nav";
 import PhotosScreens from "../components/photosViews";
 import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 import { getPhoto } from "../hooks/Photos";
 import { IonSpinner } from "@ionic/react";
 
-// import { ShowToast } from "../App";
 import "./photo.css";
 
 interface tabProps {}
@@ -41,8 +39,6 @@ const Photo: React.FC<tabProps> = ({}) => {
     <IonPage>
       <IonContent fullscreen>
         <div className="App AppP">
-          {/* <Nav block={() => {}} /> */}
-          {/* <PhotosScreens /> */}
           {!url ? (
             <IonSpinner
               className="spinner"
