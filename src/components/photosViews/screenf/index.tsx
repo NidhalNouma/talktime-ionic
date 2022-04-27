@@ -20,7 +20,7 @@ const Screenf: React.FC<sProps> = ({ setImg, remove, url }) => {
   return (
     <React.Fragment>
       <div className="ion-text-center ion-margin-top full-width">
-        <h3>Send photo to the future.</h3>
+        <h3>Send photos to the future.</h3>
         <Url
           id={id}
           removeId={() => {

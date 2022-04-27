@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { IonContent, IonPage } from "@ionic/react";
 // import Nav from "../components/navbar/Nav";
-// import PhotosScreens from "../components/photosViews";
+import PhotosScreens from "../components/photosViews";
 import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 import { getPhoto } from "../hooks/Photos";
@@ -62,11 +62,18 @@ const Photo: React.FC<tabProps> = ({}) => {
                   }}
                 />
               </div>
-              <img
-                src={url.url}
-                alt="img"
-                className={`${!reveal ? "blur" : ""} img`}
-              />
+              <div className="div-img">
+                <img
+                  src={url.url}
+                  alt="img"
+                  className={`${!reveal ? "blur" : ""} img`}
+                />
+                {!reveal && (
+                  <div className="contain-d">
+                    <PhotosScreens />
+                  </div>
+                )}
+              </div>
             </React.Fragment>
           )}
         </div>

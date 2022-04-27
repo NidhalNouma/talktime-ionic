@@ -10,7 +10,7 @@ const Screen1: React.FC<sProps> = ({ setImg }) => {
   return (
     <React.Fragment>
       <div className="ion-text-center ion-margin-top">
-        <h3>Send photo to the future.</h3>
+        <h3>Send photos to the future.</h3>
       </div>
       <SnapButton
         onSelect={(img: any) => {

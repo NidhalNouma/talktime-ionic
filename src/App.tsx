@@ -72,7 +72,7 @@ const App: React.FC = () => {
               <Route exact path="/photos">
                 <Tab3 />
               </Route>
-              <Route exact path="/p/:id">
+              <Route exact path="/photos/:id">
                 <Photo />
               </Route>
               <Route exact path="/">

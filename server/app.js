@@ -9,6 +9,7 @@ const port = process.argv[2] || 8080;
 const photos = require("./photos");
 
 app.use("/p", photos);
+app.use("/photos", photos);
 
 const path = require("path");
 app.use("/static", express.static(path.join(__dirname, "../build/static")));

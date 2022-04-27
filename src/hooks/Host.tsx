@@ -55,7 +55,7 @@ export function copyToClipboard(
   done: Function,
   photo: boolean = false
 ) {
-  const getUrl = `${!photo ? URL + "/talk/" : URL + "/p/"}${text}`;
+  const getUrl = `${!photo ? URL + "/talk/" : URL + "/photos/"}${text}`;
   Clipboard.copy(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");
