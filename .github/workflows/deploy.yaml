@@ -8,6 +8,7 @@ env:
   RUN_REGION: us-east4
   SA_KEY_JSON: ${{ secrets.GCP_SA_KEY_JSON }}
   APP_NAME: talktime_simplepeer
+  FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
 jobs:
   deploy:
     name: Deploy to Cloud Run
@@ -27,4 +28,4 @@ jobs:
         run: gcloud builds submit --tag gcr.io/$PROJECT_ID/$APP_NAME:$GITHUB_SHA
 
       - name: Deploy
-        run: gcloud run deploy talktimesimplepeer --image gcr.io/$PROJECT_ID/$APP_NAME:$GITHUB_SHA --platform managed --region $RUN_REGION
+        run: gcloud run deploy talktimesimplepeer --image gcr.io/$PROJECT_ID/$APP_NAME:$GITHUB_SHA --platform managed --region $RUN_REGION --set-env-vars "FIREBASE_API_KEY=$FIREBASE_API_KEY"

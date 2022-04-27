@@ -28,6 +28,7 @@
   "scripts": {
     "build": "cd public & npm run build",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "create-env": "printenv > .env"
   }
 }

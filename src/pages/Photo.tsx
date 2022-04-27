@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { IonContent, IonPage } from "@ionic/react";
-import Nav from "../components/navbar/Nav";
-import PhotosScreens from "../components/photosViews";
+// import Nav from "../components/navbar/Nav";
+// import PhotosScreens from "../components/photosViews";
 import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 import { getPhoto } from "../hooks/Photos";
@@ -40,8 +40,8 @@ const Photo: React.FC<tabProps> = ({}) => {
   return (
     <IonPage>
       <IonContent fullscreen>
-        <div className="App">
-          <Nav block={() => {}} />
+        <div className="App AppP">
+          {/* <Nav block={() => {}} /> */}
           {/* <PhotosScreens /> */}
           {!url ? (
             <IonSpinner
@@ -52,10 +52,14 @@ const Photo: React.FC<tabProps> = ({}) => {
           ) : (
             <React.Fragment>
               <div className="rev-div">
-                <h4>{!reveal ? "View in" : "Deleted in"}</h4>
+                <h5>{!reveal ? "Photo appears in" : "Photo disapears in"}</h5>
                 <FlipClockCountdown
                   to={reveal ? url.expire : url.reveal}
                   className="flip-clock"
+                  onComplete={() => {
+                    if (!reveal) setReveal(true);
+                    else history.push("/photos");
+                  }}
                 />
               </div>
               <img

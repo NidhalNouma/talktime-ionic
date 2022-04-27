@@ -1,3 +1,4 @@
+require("dotenv").config();
 const randomString = require("random-string");
 const { initializeApp } = require("firebase/app");
 // import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
@@ -10,14 +11,15 @@ const {
 } = require("firebase/storage");
 
 // TODO: Replace the following with your app's Firebase project configuration
+
 const firebaseConfig = {
-  apiKey: "AIzaSyApGSMWbFNPmUZKk4RQDmZYCBqlB5B69Xk",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "talktime-57dc9.firebaseapp.com",
   projectId: "talktime-57dc9",
   storageBucket: "talktime-57dc9.appspot.com",
   messagingSenderId: "907184166513",
-  appId: "1:907184166513:web:5b7cd711a736d985aaadd0",
-  measurementId: "G-6049KZ3QMC",
+  appId: "1:907184166513:web:74dcf3afcf0c5d5aaaadd0",
+  measurementId: "G-QV17V8P1F8",
 };
 
 const app = initializeApp(firebaseConfig);

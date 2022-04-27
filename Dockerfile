@@ -16,7 +16,8 @@ WORKDIR /usr/src/app
 # Copy local code to the container image.
 COPY . ./
 # Install production dependencies.
-RUN cd server && npm install && cd ..
+RUN cd server && npm install
+RUN npm run create-env && cd ..
 
 # Install and build the react app.
 RUN npm install
