@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 COPY . ./
 # Install production dependencies.
 RUN cd server && npm install
-RUN npm run create-env && cd ..
+RUN printenv > .env && cd ..
 
 # Install and build the react app.
 RUN npm install
