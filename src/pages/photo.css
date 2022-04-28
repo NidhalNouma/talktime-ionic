@@ -1,5 +1,5 @@
 .blur {
-  filter: blur(30px);
+  filter: blur(16px);
 }
 
 .img {
@@ -49,6 +49,10 @@
   align-items: center;
   justify-content: center;
   max-width: 90%;
+}
+
+.rev-div h5 {
+  font-size: 12px;
 }
 
 .AppP {

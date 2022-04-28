@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: "20mb" }));
+app.use(bodyParser.json({ limit: "8mb" }));
 app.use(bodyParser.raw());
 
 app.get("/p/:id", function (req, res) {

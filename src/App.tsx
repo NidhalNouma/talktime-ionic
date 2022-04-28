@@ -83,13 +83,13 @@ const App: React.FC = () => {
               slot="bottom"
               style={{ display: `${incall ? "none" : "flex"}` }}
             >
-              <IonTabButton tab="Talk" href="/talk">
-                <IonIcon icon={call} />
-                <IonLabel>Talk</IonLabel>
-              </IonTabButton>
               <IonTabButton tab="Host" href="/host">
                 <IonIcon icon={people} />
                 <IonLabel>Host</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Talk" href="/talk">
+                <IonIcon icon={call} />
+                <IonLabel>Talk</IonLabel>
               </IonTabButton>
               <IonTabButton tab="Photos" href="/photos">
                 <IonIcon icon={camera} />

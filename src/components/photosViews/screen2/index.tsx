@@ -41,21 +41,30 @@ const Screen2: React.FC<sProps> = ({ setDate, back }) => {
               className="date-picker"
               onIonChange={(e: any) => setCDate(e.detail.value!)}
             ></IonDatetime>
-            <button
-              className="btn"
-              onClick={() => setDate(cdate ? new Date(cdate) : new Date())}
-            >
-              Next
-            </button>
+            <div className="mid-btn">
+              <button
+                className="btn"
+                onClick={() => (custom ? setCustom(false) : back())}
+              >
+                Back
+              </button>
+              <button
+                className="btn"
+                onClick={() => setDate(cdate ? new Date(cdate) : new Date())}
+              >
+                Next
+              </button>
+            </div>
           </React.Fragment>
         )}
-
-        <button
-          className="btn"
-          onClick={() => (custom ? setCustom(false) : back())}
-        >
-          Back
-        </button>
+        {!custom && (
+          <button
+            className="btn"
+            onClick={() => (custom ? setCustom(false) : back())}
+          >
+            Back
+          </button>
+        )}
       </div>
     </React.Fragment>
   );

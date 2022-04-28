@@ -3,12 +3,18 @@
 }
 
 .btn {
+  display: block;
+  text-align: center;
   width: 100%;
-  margin: 0.5rem 0;
-  padding: 0.7rem;
+  margin: 0.8rem 0;
+  padding: 0.7rem 4rem;
+  background-color: var(--ion-color-primary);
+  color: #fff;
+  font-size: 16px;
 }
 
 .div-date {
+  margin: auto 0;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -16,4 +22,9 @@
 
 .div-date::-webkit-scrollbar {
   display: none;
+}
+
+.mid-btn {
+  display: flex;
+  gap: 0.5rem;
 }
