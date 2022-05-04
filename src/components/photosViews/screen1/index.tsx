@@ -45,15 +45,7 @@ const Screen1: React.FC<sProps> = ({ setImg }) => {
   return (
     <React.Fragment>
       {rImg ? (
-        <div
-          id="editor"
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-            marginTop: "1rem",
-          }}
-        />
+        <div id="editor" />
       ) : (
         <React.Fragment>
           <div className="ion-text-center ion-margin-top">

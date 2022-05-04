@@ -6,7 +6,7 @@ export const URL = process.env.REACT_APP_DEV
 
 export const photoLicense = {
   api_token: "vHPJ7-zOgDTCi9prDUH1yA",
-  app_identifiers: ["https://talktime.us", "localhost"],
+  app_identifiers: ["www.talktime.us", "talktime.us", "localhost"],
   available_actions: [],
   domains: ["https://api.photoeditorsdk.com"],
   enterprise_license: false,
@@ -28,12 +28,12 @@ export const photoLicense = {
     "textdesign",
     "transform",
   ],
-  issued_at: 1651673006,
+  issued_at: 1651686690,
   minimum_sdk_version: "1.0",
   owner: "TT",
   platform: "HTML5",
   products: ["pesdk"],
   version: "2.4",
   signature:
-    "S4JLbMnXUmy6YliqKaHGLLj7A7/tzG1GZEzGD7v6ChvZ30hdKY6OgtSoAgUOJaefZD3gv54PPrU8X4/xKggEXrRj++jopeouTcbvCOLvt0K399HPdYa2l5sb2IPbnm21NdtPded31mpXPscNjof133oBPOHtdQVnbISZSWzb875J59prItymmcOz3OjiWQiogC3LvnOR6ZwxlqPYcCZpnFBhQkqHrFtmvupYdPL5DJeHyjemDXbB66HZbCFW24Y1/0OFNYVpatFu9lWPTIq+gue8iE+O8T3TlVTd++kqOvHiqq2tftca1NxOosCKe8ez6pQp0QCQRr/7Ve9Yb9UaXmSrHe36DfyjTvRViBRIJ8xg/f77X7+MEqOResfs8BrAa336HoKpwxwe4kGB4RHwx/XtKmHHhyzABzyRQdsBv5L3BFjUVl0y5HCGio8znYCTXFiau1qYSPRVWRYgq24liK1OTOw86Lum9+0PQB3/08S39R4Dx91erc2ucBhMWMQntLw/jed3cNFNdWQw1ygNHrIYYMmuIoOUMI7EKK8/Mh+79BgvITTnv7mgphgJgMxErtOJYTFKYxXPIwZTP+ByQR2E2WY+vw2Y67FSqn/MzK0Lv5cLEuUB7XsRQI889sMkM5jlK6DmJDIOgx/ywM/E2WPpk6jYYetOQCl51AWy080=",
+    "SnG7qPQEzO3o+QHxY/imc5QV5GqMbPxTPjmCTNpaZRiB6NIzUCQFk3jntqEVLEzOz2jKwhfIEDTHlN9/lvS2MCA5Nin+vsUxYKxBRMPFCuGDWd5nIbLAv/oK3bDb3IFrNZAUKZMcApqsDcpOt4ztHyJYqKpoTHeamQOCD+FKyFHG7I/AtO8GPDc0ZdEEO7BN5AZU9qUAf7r/Fg1VUB0P8Q8gG2pbRdVycH3RgItPlh9QkHvhBDHZLwEtZ90k84HIkpjO/2P8t26gOoJoIo6fhZvdv/vRKt8R1akeKwhSaAXI9CkyFgoI5LlMaSgH1O96ahKXoi7o3KHr7aSxqBwA9MwrDFXimp6eDisjEHBA6lr9hVDUxf5GAkj+p/2w0RTKDP+SVz9Ax7ishG8GWUpf6mbBBk9Po5SldRvmFeouLn1sWJDfqwEK0ZZIXoXlVHSzToPAqdHiPm29Hs5I3L/UN/RAqpLmnxGazFZovCSoeMhIGt/VFPryyE1URMAIYd5iZAZOwpQ9aUwGTcv7cvYFGuit6kdk2y8UDcclfB0ZiCkAn4/ShWKgaBFZSsxZ5ClKtwRuVggTSQLTFrobR4SLpavwmCZZFkH46lU0sUTib7xHlbXc3uOPjr0XXPPl1WRXB2PKCj+vGzYsVRGQuNodLz9daFUk+7jAOPApobPOdR8=",
 };
