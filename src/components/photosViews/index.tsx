@@ -7,13 +7,16 @@ import { IonSpinner } from "@ionic/react";
 import { postPhoto, uid } from "../../hooks/Photos";
 import { ShowToast } from "../../App";
 
-interface sProps {}
+interface sProps {
+  url: any;
+  setUrl: Function;
+}
 
-const PhotosScreens: React.FC<sProps> = ({}) => {
+const PhotosScreens: React.FC<sProps> = ({ url, setUrl }) => {
   const { openToast } = useContext(ShowToast);
   const { getId, setIdToStorqge, resetId } = uid("photo");
 
-  const [url, setUrl] = useState<any>(null);
+  // const [url, setUrl] = useState<any>(null);
   const [img, setImg] = useState(null);
   const [date, setDate] = useState(null);
 

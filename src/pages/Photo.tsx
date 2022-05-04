@@ -18,6 +18,7 @@ const Photo: React.FC<tabProps> = ({}) => {
   const { id } = useParams<params>();
   let history = useHistory();
   const [url, setUrl] = useState<any>(null);
+  const [curl, setCUrl] = useState<any>(null);
   const [reveal, setReveal] = useState(false);
 
   useEffect(() => {
@@ -34,6 +35,10 @@ const Photo: React.FC<tabProps> = ({}) => {
       if (d >= dr) setReveal(true);
     }
   }, [url]);
+
+  useEffect(() => {
+    // if (curl) setUrl(curl);
+  }, [curl]);
 
   return (
     <IonPage>
@@ -66,7 +71,7 @@ const Photo: React.FC<tabProps> = ({}) => {
                 />
                 {!reveal && (
                   <div className="contain-d">
-                    <PhotosScreens />
+                    <PhotosScreens url={curl} setUrl={setCUrl} />
                   </div>
                 )}
               </div>
