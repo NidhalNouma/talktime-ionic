@@ -35,6 +35,12 @@ const Screenf: React.FC<sProps> = ({ setImg, remove, url }) => {
         CanvasAction.CLOSE,
         CanvasAction.EXPORT,
       ],
+
+      export: {
+        image: {
+          enableDownload: false,
+        },
+      },
     });
     console.log("PhotoEditorSDK for Web is ready!");
     editor.on(UIEvent.EXPORT, (imageSrc) => {
