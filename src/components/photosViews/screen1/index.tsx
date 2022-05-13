@@ -1,85 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { SnapButton } from "../../Buttons/CallButton";
-import { UIEvent, PhotoEditorSDKUI, CanvasAction } from "photoeditorsdk";
+import Editor from "../editor";
 
-import { photoLicense } from "../../../constant";
 import "./index.css";
 
 interface sProps {
+  encodeImageFileAsURL: Function;
   setImg: Function;
 }
 
-const Screen1: React.FC<sProps> = ({ setImg }) => {
+const Screen1: React.FC<sProps> = ({ encodeImageFileAsURL, setImg }) => {
   const [rImg, setRImg] = useState(null);
-
-  const initEditor = async () => {
-    const editor = await PhotoEditorSDKUI.init({
-      container: "#editor",
-      image: rImg!,
-      layout: "basic",
-      license: JSON.stringify(photoLicense),
-      mainCanvasActions: [
-        CanvasAction.UNDO,
-        CanvasAction.REDO,
-        CanvasAction.CLOSE,
-        CanvasAction.EXPORT,
-      ],
-
-      export: {
-        image: {
-          enableDownload: false,
-        },
-      },
-    });
-    console.log("PhotoEditorSDK for Web is ready!");
-    editor.on(UIEvent.EXPORT, (imageSrc) => {
-      console.log("EXPORTED ...");
-      console.log("Exported ", imageSrc.src);
-      setImg(imageSrc.src);
-    });
-
-    editor.on(UIEvent.CLOSE, (imageSrc) => {
-      console.log("CLOSED ...");
-      setRImg(null);
-    });
-  };
+  const [fImg, setFImg] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (rImg) initEditor();
+    if (rImg) setOpen(true);
   }, [rImg]);
+
+  useEffect(() => {
+    let interval: any = null;
+    if (fImg) {
+      if (open) setOpen(false);
+      interval = setInterval(() => {
+        setImg(fImg);
+      }, 200);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [fImg]);
 
   return (
     <React.Fragment>
-      {rImg ? (
-        <div id="editor" />
-      ) : (
-        <React.Fragment>
-          <div className="ion-text-center ion-margin-top">
-            <h3>Send photos to the future.</h3>
-          </div>
-
-          <SnapButton
-            onSelect={(img: any) => {
-              console.log(img);
-              encodeImageFileAsURL(img, setRImg);
-            }}
-            name="Snap"
-          />
-        </React.Fragment>
-      )}
+      <React.Fragment>
+        <div className="ion-text-center ion-margin-top">
+          <h3>Collect photo feedback.</h3>
+        </div>
+        <SnapButton
+          onSelect={(img: any) => {
+            console.log(img);
+            encodeImageFileAsURL(img, setRImg);
+          }}
+          name="Snap"
+        />
+      </React.Fragment>
+      <Editor img={rImg} setImg={setFImg} open={open} setOpen={setOpen} />
     </React.Fragment>
   );
 };
 
 export default Screen1;
-
-function encodeImageFileAsURL(file: any, setImg: Function) {
-  var reader = new FileReader();
-  reader.onloadend = function () {
-    let nimg = reader?.result?.toString();
-    // .replace(/^data:image\/(jpg|gif|png|bmp|heic|jpeg);base64,/, "");
-    console.log("RESULT", nimg);
-    setImg(nimg);
-  };
-  reader.readAsDataURL(file);
-}

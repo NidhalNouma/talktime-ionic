@@ -25,6 +25,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.26.1",
+    "browser-image-compression": "^2.0.0",
     "cordova-clipboard": "^1.3.0",
     "ionicons": "^5.4.0",
     "photoeditorsdk": "^5.16.0",
