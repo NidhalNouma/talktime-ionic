@@ -4,9 +4,11 @@ import { IonContent, IonPage } from "@ionic/react";
 import Nav from "../components/navbar/Nav";
 import PhotosScreens from "../components/photosViews";
 
-import { useParams, useHistory } from "react-router-dom";
 import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
+
+import PModel from "../components/pmodel";
+import Swip from "../components/photosViews/swiper";
 
 import "./Tab3.css";
 
@@ -15,6 +17,8 @@ interface tabProps {}
 const Tab3: React.FC<tabProps> = ({}) => {
   const [url, setUrl] = useState<any>(null);
   const [reveal, setReveal] = useState(false);
+
+  const [show, setShow] = useState(false);
 
   return (
     <IonPage>
@@ -36,7 +40,17 @@ const Tab3: React.FC<tabProps> = ({}) => {
             </div>
           )}
 
-          <div className="div-img">
+          <div
+            className="div-img"
+            onClick={(e: any) => {
+              console.log(e.target.className);
+              if (
+                e.target.className === "div-img" ||
+                e.target.className === "contain-d"
+              )
+                url && setShow(true);
+            }}
+          >
             {url && (
               <img
                 src={url.url}
@@ -45,11 +59,15 @@ const Tab3: React.FC<tabProps> = ({}) => {
               />
             )}
             <div className="contain-d">
-              {/* <PhotosScreens url={curl} setUrl={setCUrl} /> */}
               <PhotosScreens url={url} setUrl={setUrl} />
             </div>
           </div>
         </div>
+        {url && reveal && (
+          <PModel open={show} setOpen={setShow}>
+            <Swip urls={url.url} close={() => setShow(false)} />
+          </PModel>
+        )}
       </IonContent>
     </IonPage>
   );

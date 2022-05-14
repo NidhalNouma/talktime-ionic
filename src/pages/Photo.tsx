@@ -7,6 +7,9 @@ import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 import { getPhoto } from "../hooks/Photos";
 import { IonSpinner } from "@ionic/react";
 
+import PModel from "../components/pmodel";
+import Swip from "../components/photosViews/swiper";
+
 import "./photo.css";
 
 interface tabProps {}
@@ -20,6 +23,8 @@ const Photo: React.FC<tabProps> = ({}) => {
   const [url, setUrl] = useState<any>(null);
   const [curl, setCUrl] = useState<any>(null);
   const [reveal, setReveal] = useState(false);
+
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     getPhoto(id, (u: any) => {
@@ -63,7 +68,17 @@ const Photo: React.FC<tabProps> = ({}) => {
                   }}
                 />
               </div>
-              <div className="div-img">
+              <div
+                className="div-img"
+                onClick={(e: any) => {
+                  console.log(e.target.className);
+                  if (
+                    e.target.className === "div-img" ||
+                    e.target.className === "contain-d"
+                  )
+                    url && setShow(true);
+                }}
+              >
                 <img
                   src={url.url}
                   alt="img"
@@ -78,6 +93,12 @@ const Photo: React.FC<tabProps> = ({}) => {
             </React.Fragment>
           )}
         </div>
+
+        {url && reveal && (
+          <PModel open={show} setOpen={setShow}>
+            <Swip urls={url.url} close={() => setShow(false)} />
+          </PModel>
+        )}
       </IonContent>
     </IonPage>
   );
