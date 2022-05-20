@@ -10,14 +10,11 @@ import Call, { Mute, stopAudioOnly } from "../hooks/Call";
 import Main from "../hooks/Main";
 
 import { ShowToast } from "../App";
-import "./Tab1.css";
+import "./Feed.css";
 
-interface tabProps {
-  incall: Boolean;
-  setIncall: Function;
-}
+interface tabProps {}
 
-const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
+const Feed: React.FC<tabProps> = ({}) => {
   const [lstream, setLStream] = useState(null);
   const [rstream, setRStream] = useState(null);
 
@@ -38,31 +35,6 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
     (msg: string, ty: number = 1) => openToast(msg, ty)
   );
   const { muted, unmute, mute } = Mute(lstream);
-
-  useEffect(() => {
-    if (state === 0) {
-      if (incall) {
-        stopAudioOnly(rstream);
-        openToast("Disconnected", -1);
-      }
-
-      stopAudioOnly(lstream);
-      setIncall(false);
-      unmute();
-    }
-  }, [state]);
-
-  useEffect(() => {
-    if (startCall) {
-      answer();
-      openToast("Connected");
-      setIncall(true);
-    }
-
-    if (rstream) {
-      if (audio.current) audio.current.srcObject = rstream;
-    }
-  }, [startCall, rstream]);
 
   return (
     <IonPage>
@@ -94,4 +66,4 @@ const Tab1: React.FC<tabProps> = ({ incall, setIncall }) => {
   );
 };
 
-export default Tab1;
+export default Feed;

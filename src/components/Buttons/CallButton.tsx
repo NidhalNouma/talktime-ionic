@@ -71,3 +71,26 @@ export const SnapButton: React.FC<propsSnapButton> = ({
     </div>
   );
 };
+
+export const RecordButton: React.FC<propsCallButton> = ({
+  onClick,
+  name,
+  muted,
+  mute,
+}) => {
+  return (
+    <div className="callButton">
+      {name === "End" && (
+        <button
+          onClick={mute}
+          className={`button ${!muted ? "mute" : "unmute"}`}
+        >
+          {!muted ? "Pause" : "Play"}
+        </button>
+      )}
+      <button onClick={onClick} className={`button ${name}`}>
+        {name}
+      </button>
+    </div>
+  );
+};

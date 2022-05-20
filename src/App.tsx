@@ -10,10 +10,13 @@ import {
   setupIonicReact,
   IonIcon,
 } from "@ionic/react";
-import { call, people } from "ionicons/icons";
+import { call, people, mic, globe, recording } from "ionicons/icons";
 import { IonReactRouter } from "@ionic/react-router";
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
+import Live from "./pages/Live";
+import Host from "./pages/Host";
+import Talk from "./pages/Talk";
+import Feed from "./pages/Feed";
+import Voicemail from "./pages/Voicemail";
 import Toast from "./components/Toast";
 
 /* Core CSS required for Ionic components to work properly */
@@ -58,30 +61,51 @@ const App: React.FC = () => {
         <ShowToast.Provider value={{ openToast }}>
           <IonTabs>
             <IonRouterOutlet>
-              <Route exact path="/talk">
-                <Tab1 incall={incall} setIncall={setIncall} />
+              <Route exact path="/live">
+                <Live incall={incall} setIncall={setIncall} />
               </Route>
-              <Route exact path="/talk/:id">
-                <Tab1 incall={incall} setIncall={setIncall} />
+              <Route exact path="/live/:id">
+                <Live incall={incall} setIncall={setIncall} />
               </Route>
               <Route exact path="/host">
-                <Tab2 incall={incall} setIncall={setIncall} />
+                <Host incall={incall} setIncall={setIncall} />
+              </Route>
+              <Route exact path="/talk">
+                <Talk />
+              </Route>
+              <Route exact path="/feed">
+                <Feed />
+              </Route>
+              <Route exact path="/voicemail">
+                <Voicemail />
               </Route>
               <Route exact path="/">
-                <Redirect to="/talk" />
+                <Redirect to="/feed" />
               </Route>
             </IonRouterOutlet>
             <IonTabBar
               slot="bottom"
               style={{ display: `${incall ? "none" : "flex"}` }}
             >
-              <IonTabButton tab="Host" href="/host">
+              {/* <IonTabButton tab="Host" href="/host">
                 <IonIcon icon={people} />
                 <IonLabel>Host</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="Talk" href="/talk">
+              <IonTabButton tab="Live" href="/live">
                 <IonIcon icon={call} />
+                <IonLabel>Live</IonLabel>
+              </IonTabButton> */}
+              <IonTabButton tab="Talk" href="/talk">
+                <IonIcon icon={mic} />
                 <IonLabel>Talk</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Feed" href="/feed">
+                <IonIcon icon={globe} />
+                <IonLabel>Feed</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Voicemail" href="/voicemail">
+                <IonIcon icon={recording} />
+                <IonLabel>Voicemail</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>

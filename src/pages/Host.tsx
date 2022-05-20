@@ -11,7 +11,7 @@ import Main from "../hooks/Main";
 import { uid, copyToClipboard } from "../hooks/Host";
 
 import { ShowToast } from "../App";
-import "./Tab2.css";
+import "./Host.css";
 
 interface tabProps {
   incall: Boolean;

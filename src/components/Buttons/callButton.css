@@ -18,7 +18,8 @@
   /* margin-bottom: 4rem; */
 }
 
-.Call {
+.Call,
+.Record {
   background-color: var(--ion-color-primary);
 }
 
