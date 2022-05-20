@@ -12,7 +12,6 @@ app.use("/p", photos);
 app.use("/photos", photos);
 
 const path = require("path");
-app.use("/static", express.static(path.join(__dirname, "../build/static")));
 app.use("/icons", express.static(path.join(__dirname, "../build/icons")));
 app.use("/assets", express.static(path.join(__dirname, "../build/assets")));
 

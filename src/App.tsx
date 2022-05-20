@@ -10,12 +10,10 @@ import {
   setupIonicReact,
   IonIcon,
 } from "@ionic/react";
-import { call, people, camera } from "ionicons/icons";
+import { call, people } from "ionicons/icons";
 import { IonReactRouter } from "@ionic/react-router";
 import Tab1 from "./pages/Tab1";
 import Tab2 from "./pages/Tab2";
-import Tab3 from "./pages/Tab3";
-import Photo from "./pages/Photo";
 import Toast from "./components/Toast";
 
 /* Core CSS required for Ionic components to work properly */
@@ -69,12 +67,6 @@ const App: React.FC = () => {
               <Route exact path="/host">
                 <Tab2 incall={incall} setIncall={setIncall} />
               </Route>
-              <Route exact path="/photos">
-                <Tab3 />
-              </Route>
-              <Route exact path="/photos/:id">
-                <Photo />
-              </Route>
               <Route exact path="/">
                 <Redirect to="/talk" />
               </Route>
@@ -90,10 +82,6 @@ const App: React.FC = () => {
               <IonTabButton tab="Talk" href="/talk">
                 <IonIcon icon={call} />
                 <IonLabel>Talk</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="Photos" href="/photos">
-                <IonIcon icon={camera} />
-                <IonLabel>Photos</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
