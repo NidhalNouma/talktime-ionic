@@ -1,5 +1,6 @@
 require("dotenv").config();
-const { uploadPhoto, deletePhoto } = require("./fire");
+const { uploadFile, deleteFile } = require("../db/fire");
+const firePath = "photos";
 
 console.log(process.env.APP_NAME);
 
@@ -36,7 +37,7 @@ app.post("/post", async function (req, res) {
   // console.log(expiration, date);
 
   try {
-    const p = await uploadPhoto(image);
+    const p = await uploadFile(image, firePath);
     if (!p) res.send(null);
     const r = newPhoto(p.url, date, expiration, p.id);
     console.log(r);
@@ -55,7 +56,7 @@ app.post("/d/:id", (req, res) => {
     var index = photos.indexOf(p);
     if (index !== -1) {
       photos.splice(index, 1);
-      deletePhoto(r.id);
+      deleteFile(r.id);
       r.delete = true;
     }
   }
@@ -69,7 +70,7 @@ setInterval(() => {
   photos.forEach((v, index) => {
     if (time > v.expie) {
       photos.splice(index, 1);
-      deletePhoto(v.id);
+      deleteFile(v.id);
     }
   });
 }, periode);

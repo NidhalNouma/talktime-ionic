@@ -41,17 +41,16 @@ function Record() {
     }
   };
 
-  const audioUrl = () => (audio ? URL.createObjectURL(audio) : null);
-
-  return { audio, start, resume, pause, stop, audioUrl };
+  return { audio, start, resume, pause, stop };
 }
 
 export default Record;
 
 export function CRecord() {
-  const { audio, start, pause, resume, stop, audioUrl } = Record();
+  const { audio, start, pause, resume, stop } = Record();
   const [record, setRecord] = useState(-1);
   const [pauseRecording, setPauseRecording] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<any>(null);
 
   useEffect(() => {
     if (record === 1) {
@@ -62,7 +61,7 @@ export function CRecord() {
   }, [record]);
 
   useEffect(() => {
-    console.log("record", audio, audioUrl());
+    if (audio) setAudioUrl(URL.createObjectURL(audio));
   }, [audio]);
 
   useEffect(() => {
@@ -70,5 +69,5 @@ export function CRecord() {
     else if (record === 1 && !pauseRecording) resume();
   }, [pauseRecording]);
 
-  return { audio, record, setRecord, pauseRecording, setPauseRecording };
+  return { audioUrl, record, setRecord, pauseRecording, setPauseRecording };
 }

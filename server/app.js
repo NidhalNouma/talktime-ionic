@@ -6,7 +6,7 @@ const cors = require("cors");
 app.use(cors());
 const port = process.argv[2] || 8080;
 
-const photos = require("./photos");
+const photos = require("./api/photos");
 
 app.use("/p", photos);
 app.use("/photos", photos);
