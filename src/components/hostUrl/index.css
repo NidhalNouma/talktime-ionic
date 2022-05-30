@@ -39,3 +39,35 @@
   width: 26px;
   height: 26px;
 }
+
+.hostLink .sep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hostLink .buttonil {
+  background-color: transparent;
+  border-left: 4px solid var(--ion-color-medium);
+  /* border-right: 4px solid var(--ion-color-medium); */
+  margin: 0;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 40px; */
+  /* height: 40px; */
+}
+
+.hostLink .buttonir {
+  background-color: transparent;
+  /* border-left: 4px solid var(--ion-color-medium); */
+  border-right: 4px solid var(--ion-color-medium);
+  margin: 0;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 40px; */
+  /* height: 40px; */
+}

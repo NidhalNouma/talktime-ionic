@@ -18,7 +18,7 @@ app.get("/p/:id", function (req, res) {
   const p = getById(id);
 
   if (p) {
-    return res.sendFile(path.join(__dirname, "../build/index.html"));
+    return res.sendFile(path.join(__dirname, "../../build/index.html"));
   } else return res.redirect("/photos");
 });
 

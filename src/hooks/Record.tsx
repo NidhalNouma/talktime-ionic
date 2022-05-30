@@ -46,9 +46,9 @@ function Record() {
 
 export default Record;
 
-export function CRecord() {
+export function CRecord(id: string) {
   const { audio, start, pause, resume, stop } = Record();
-  const [record, setRecord] = useState(-1);
+  const [record, setRecord] = useState(id ? 1 : -1);
   const [pauseRecording, setPauseRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<any>(null);
 
@@ -69,5 +69,12 @@ export function CRecord() {
     else if (record === 1 && !pauseRecording) resume();
   }, [pauseRecording]);
 
-  return { audioUrl, record, setRecord, pauseRecording, setPauseRecording };
+  return {
+    audio,
+    audioUrl,
+    record,
+    setRecord,
+    pauseRecording,
+    setPauseRecording,
+  };
 }

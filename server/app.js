@@ -7,9 +7,13 @@ app.use(cors());
 const port = process.argv[2] || 8080;
 
 const photos = require("./api/photos");
+const audio = require("./api/audio");
+const user = require("./api/user");
 
 app.use("/p", photos);
 app.use("/photos", photos);
+app.use("/audio", audio);
+app.use("/user", user);
 
 const path = require("path");
 app.use("/icons", express.static(path.join(__dirname, "../build/icons")));

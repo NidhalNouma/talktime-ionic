@@ -1,8 +1,14 @@
-import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 
+import { useHistory } from "react-router-dom";
 import { IonContent, IonPage } from "@ionic/react";
 import Nav from "../components/navbar/Nav";
+import { HostUrli } from "../components/hostUrl";
+import { ReplyButton } from "../components/Buttons/CallButton";
+import Wave from "../components/WaveSurface";
+
+import { UserContext, getUser, likeAudio, dislikeAudio } from "../hooks/User";
+import { Voicemails, copyToClipboard } from "../hooks/Audio";
 
 import { ShowToast } from "../App";
 import "./Voicemail.css";
@@ -10,20 +16,92 @@ import "./Voicemail.css";
 interface tabProps {}
 
 const Voicemail: React.FC<tabProps> = ({}) => {
-  type params = {
-    id: string;
-  };
-  const { id } = useParams<params>();
   const { openToast } = useContext(ShowToast);
+  let history = useHistory();
+  const [ci, setCi] = useState(0);
+  const { user, setUser } = useContext<any>(UserContext);
+
+  const { audios } = Voicemails(user?.id, user?.voicemail);
+  const [audio, setAudio] = useState<any>(null);
+
+  useEffect(() => {
+    if (audios?.length > 0 && ci < audios.length && ci >= 0) {
+      setAudio(audios[ci]);
+      // console.log(audios[ci]);
+    } else if (audios?.length === ci) setCi(0);
+    else if (ci < 0) setCi(audios.length - 1);
+  }, [ci, audios]);
 
   return (
     <IonPage>
       <IonContent fullscreen>
         <div className="App">
           <Nav block={() => {}} />
-          <div className="ion-text-center ion-margin-top">
-            <h3>{`You have ${13} messages.`}</h3>
+          <div
+            className="ion-text-center ion-margin-top"
+            style={{ marginBottom: "auto" }}
+          >
+            <h3>{`You have ${user ? user.voicemail?.length : 0} messages.`}</h3>
+            {audio?.id && (
+              <HostUrli
+                id={audio.id}
+                copyId={() => {
+                  copyToClipboard(audio.id, (message: string, type: Number) =>
+                    openToast(message, type)
+                  );
+                }}
+                flagged={
+                  user?.audioFlaged?.find((a: string) => a === audio.id)
+                    ? true
+                    : false
+                }
+                liked={
+                  user?.audioLikes?.find((a: string) => a === audio.id)
+                    ? true
+                    : false
+                }
+                disliked={
+                  user?.audioDislikes?.find((a: string) => a === audio.id)
+                    ? true
+                    : false
+                }
+                flagFn={() => {}}
+                likeFn={async () => {
+                  if (user?.audioLikes?.find((a: string) => a === audio.id))
+                    return;
+                  await likeAudio(user.id, audio.id);
+                  const r = await getUser(user.id);
+                  setUser(r?.data);
+                  openToast("Liked", 1);
+                }}
+                dislikeFn={async () => {
+                  if (user?.audioDislikes?.find((a: string) => a === audio.id))
+                    return;
+                  await dislikeAudio(user.id, audio.id);
+                  const r = await getUser(user.id);
+                  setUser(r?.data);
+                  openToast("Disliked", 1);
+                }}
+              />
+            )}
           </div>
+          {audio && ci >= 0 && (
+            <Wave
+              audio={audio.audioUrl}
+              isBlob={true}
+              ida={audio.id + "voicemail"}
+            />
+          )}
+          {audio && (
+            <ReplyButton
+              onClick={() => {
+                audio && history.push(`/talk/${audio.id}?to=${audio.userId}`);
+              }}
+              name={"Reply"}
+              next={() => setCi(ci + 1)}
+              prev={() => setCi(ci - 1)}
+            />
+          )}
         </div>
       </IonContent>
     </IonPage>

@@ -4,8 +4,11 @@ import "./callButton.css";
 interface propsCallButton {
   onClick: React.MouseEventHandler;
   name: string;
-  muted: boolean;
-  mute: React.MouseEventHandler;
+  muted?: boolean;
+  mute?: React.MouseEventHandler;
+
+  next?: React.MouseEventHandler;
+  prev?: React.MouseEventHandler;
 }
 
 const CallButton: React.FC<propsCallButton> = ({
@@ -90,6 +93,29 @@ export const RecordButton: React.FC<propsCallButton> = ({
       )}
       <button onClick={onClick} className={`button ${name}`}>
         {name}
+      </button>
+    </div>
+  );
+};
+
+export const ReplyButton: React.FC<propsCallButton> = ({
+  onClick,
+  name,
+  next,
+  prev,
+}) => {
+  return (
+    <div className="callButton">
+      <button onClick={prev} className={`button arrl`}>
+        {"<<"}
+      </button>
+
+      <button onClick={onClick} className={`button ${name}`}>
+        {name}
+      </button>
+
+      <button onClick={next} className={`button arrr`}>
+        {">>"}
       </button>
     </div>
   );

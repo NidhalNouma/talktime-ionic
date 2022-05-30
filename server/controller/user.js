@@ -10,7 +10,13 @@ const collName = "Users";
 
 const newUser = async () => {
   console.log("Adding new user ...");
-  const data = { audioLikes: [], audioDislikes: [], voicemail: [] };
+  const data = {
+    audioLikes: [],
+    audioDislikes: [],
+    audioFlaged: [],
+    voicemail: [],
+    audio: null,
+  };
   const r = await add(collName, data);
   if (!r) {
     return null;
@@ -25,9 +31,9 @@ const getUser = async (userId) => {
   return r;
 };
 
-const addField = async (userId, docName, docData) => {
-  console.log("Adding audio to " + docName + " ...");
-  const r = await update(collName, userId, { [docName]: docData });
+const addAudio = async (userId, docData) => {
+  console.log("Adding audio to user ...");
+  const r = await update(collName, userId, { audio: docData });
 
   return r;
 };
@@ -41,13 +47,13 @@ const deleteUser = async (userId) => {
 const likeAudio = async (userId, audioId) => {
   console.log("Liking audio ...");
   const r = await addToArray(collName, userId, "audioLikes", audioId);
-  const r1 = await deleteFromArray(collName, userId, "audioDisikes", audioId);
+  const r1 = await deleteFromArray(collName, userId, "audioDislikes", audioId);
   return { r, r1 };
 };
 
 const dislikeAudio = async (userId, audioId) => {
   console.log("Disliking audio ...");
-  const r = await addToArray(collName, userId, "audioDisikes", audioId);
+  const r = await addToArray(collName, userId, "audioDislikes", audioId);
   const r1 = await deleteFromArray(collName, userId, "audioLikes", audioId);
   return { r, r1 };
 };
@@ -56,4 +62,13 @@ const newVoiceMail = async (userId, voiceMailId) => {
   console.log("Adding new voicemail to user ...");
   const r = await addToArray(collName, userId, "voicemail", voiceMailId);
   return r;
+};
+
+module.exports = {
+  newUser,
+  getUser,
+  addAudio,
+  likeAudio,
+  dislikeAudio,
+  newVoiceMail,
 };

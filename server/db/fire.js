@@ -14,6 +14,9 @@ const {
   collection,
   addDoc,
   getDoc,
+  getDocs,
+  query,
+  where,
   updateDoc,
   deleteDoc,
   arrayUnion,
@@ -77,6 +80,7 @@ function deleteFile(id, path) {
 }
 
 async function add(document, data) {
+  console.log("Adding new document ...", data);
   const docRef = await addDoc(collection(db, document), {
     ...data,
     createdAt: serverTimestamp(),
@@ -90,6 +94,52 @@ async function get(document, colId) {
   const d = doc(db, document, colId);
 
   const r = await getDoc(d);
+
+  if (r.exists()) {
+    console.log("Document data:", r.data());
+    return { ...r.data(), id: colId };
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+    return null;
+  }
+}
+
+async function getAll(coll) {
+  const q = query(collection(db, coll));
+  const r = [];
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.id, " => ", doc.data());
+    r.push({ ...doc.data(), id: doc.id });
+  });
+
+  return r;
+}
+
+async function getAllIn(coll, nameDoc, arr) {
+  const q = query(collection(db, coll), where(nameDoc, "in", arr));
+  const r = [];
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.id, " => ", doc.data());
+    r.push({ ...doc.data(), id: doc.id });
+  });
+
+  return r;
+}
+
+async function getAllFrom(coll, nameDoc, val) {
+  const q = query(collection(db, coll), where(nameDoc, "==", val));
+  const r = [];
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.id, " => ", doc.data());
+    r.push({ ...doc.data(), id: doc.id });
+  });
 
   return r;
 }
@@ -138,6 +188,9 @@ module.exports = {
   deleteFile,
   add,
   get,
+  getAll,
+  getAllIn,
+  getAllFrom,
   update,
   deletee,
   addToArray,
