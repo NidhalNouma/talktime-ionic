@@ -95,7 +95,7 @@ const Talk: React.FC<tabProps> = ({}) => {
               {/* {audioUrl && <Wave audio={audioUrl} />} */}
               {!recording && user?.audio && record !== 1 && (
                 <Wave
-                  audio={user?.audioDoc.audioUrl}
+                  audio={user?.audioDoc?.audioUrl}
                   isBlob={true}
                   ida={user.audio}
                 />

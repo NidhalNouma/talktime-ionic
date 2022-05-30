@@ -42,7 +42,10 @@ const Feed: React.FC<tabProps> = ({}) => {
       <IonContent fullscreen>
         <div className="App">
           <Nav block={() => {}} />
-          <div className="ion-text-center ion-margin-top full-width">
+          <div
+            className="ion-text-center ion-margin-top full-width"
+            style={{ marginBottom: "auto" }}
+          >
             <h3>{`Hear what people say.`}</h3>
             {audio?.id && (
               <HostUrli
@@ -95,14 +98,16 @@ const Feed: React.FC<tabProps> = ({}) => {
             />
           )}
 
-          <ReplyButton
-            onClick={() => {
-              audio && history.push(`/talk/${audio.id}?to=${audio.userId}`);
-            }}
-            name={"Reply"}
-            next={() => setCi(ci + 1)}
-            prev={() => setCi(ci - 1)}
-          />
+          {audio && (
+            <ReplyButton
+              onClick={() => {
+                audio && history.push(`/talk/${audio.id}?to=${audio.userId}`);
+              }}
+              name={"Reply"}
+              next={() => setCi(ci + 1)}
+              prev={() => setCi(ci - 1)}
+            />
+          )}
         </div>
       </IonContent>
     </IonPage>
