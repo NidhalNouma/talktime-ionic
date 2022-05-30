@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 const RecordRTC = require("recordrtc");
 
-const st = "dialing";
-const ss = sessionStorage.getItem(st);
-const ist = ss ? parseInt(ss) : 0;
-
 function Record() {
   const [audio, setAudio] = useState(null);
+  const [lstream, setLstream] = useState<any>(null);
   const recorder = useRef<any>(null);
 
   const start = async () => {
@@ -14,6 +11,7 @@ function Record() {
       audio: true,
     });
 
+    setLstream(stream);
     recorder.current = new RecordRTC(stream, {
       type: "video",
     });
@@ -41,13 +39,13 @@ function Record() {
     }
   };
 
-  return { audio, start, resume, pause, stop };
+  return { audio, start, resume, pause, stop, stream: lstream };
 }
 
 export default Record;
 
 export function CRecord(id: string) {
-  const { audio, start, pause, resume, stop } = Record();
+  const { audio, start, pause, resume, stop, stream } = Record();
   const [record, setRecord] = useState(id ? 1 : -1);
   const [pauseRecording, setPauseRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<any>(null);
@@ -70,6 +68,7 @@ export function CRecord(id: string) {
   }, [pauseRecording]);
 
   return {
+    stream,
     audio,
     audioUrl,
     record,

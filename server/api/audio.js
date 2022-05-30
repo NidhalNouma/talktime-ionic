@@ -46,4 +46,14 @@ app.post("/getall/:id", async function (req, res) {
   res.json(r);
 });
 
+app.post("/delete", async function (req, res) {
+  const { userId, audioId } = req.body;
+  if (!userId || !audioId)
+    return res.send({ err: "Missing userId or audioId" });
+  const r = await audio.deleteAudio(audioId);
+  const ri = await user.removeAudio(userId);
+
+  res.json(r);
+});
+
 module.exports = app;

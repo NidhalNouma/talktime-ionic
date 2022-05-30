@@ -11,7 +11,13 @@ import { ReplyButton } from "../components/Buttons/CallButton";
 import { Audios, copyToClipboard } from "../hooks/Audio";
 
 import { ShowToast } from "../App";
-import { UserContext, getUser, likeAudio, dislikeAudio } from "../hooks/User";
+import {
+  UserContext,
+  getUser,
+  likeAudio,
+  dislikeAudio,
+  flagAudio,
+} from "../hooks/User";
 import "./Feed.css";
 
 interface tabProps {}
@@ -22,20 +28,30 @@ const Feed: React.FC<tabProps> = ({}) => {
   const [ci, setCi] = useState(0);
   const [audio, setAudio] = useState<any>(null);
 
-  useEffect(() => {
-    if (audios?.length > 0 && ci < audios.length && ci >= 0) {
-      setAudio(audios[ci]);
-      // console.log(audios[ci]);
-    } else if (audios?.length === ci) setCi(0);
-    else if (ci < 0) setCi(audios.length - 1);
-  }, [ci, audios]);
-
   type params = {
     id: string;
   };
   const { id } = useParams<params>();
   let history = useHistory();
   const { openToast } = useContext(ShowToast);
+  const [li, setLi] = useState(id ? false : true);
+
+  useEffect(() => {
+    if (audios?.length > 0 && id) {
+      const i = audios.findIndex((a: any) => a.id === id);
+      if (i >= 0) setCi(i);
+      setLi(true);
+    }
+  }, [audios]);
+
+  useEffect(() => {
+    if (li) {
+      if (audios?.length > 0 && ci < audios.length && ci >= 0) {
+        setAudio(audios[ci]);
+      } else if (audios?.length === ci) setCi(0);
+      else if (ci < 0) setCi(audios.length - 1);
+    }
+  }, [ci, audios, li]);
 
   return (
     <IonPage>
@@ -70,7 +86,17 @@ const Feed: React.FC<tabProps> = ({}) => {
                     ? true
                     : false
                 }
-                flagFn={() => {}}
+                flagFn={async () => {
+                  const f = user?.audioFlaged?.find(
+                    (a: string) => a === audio.id
+                  )
+                    ? true
+                    : false;
+                  await flagAudio(user.id, audio.id, !f);
+                  const r = await getUser(user.id);
+                  setUser(r?.data);
+                  openToast(!f ? "Flagged" : "Unflagged", 1);
+                }}
                 likeFn={async () => {
                   if (user?.audioLikes?.find((a: string) => a === audio.id))
                     return;

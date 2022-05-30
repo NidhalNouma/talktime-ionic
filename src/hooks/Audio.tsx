@@ -17,8 +17,15 @@ export const Voicemails = (id: string, arr: Array<string>) => {
   const [audios, setAudios] = useState<any>(null);
 
   useEffect(() => {
-    if (id) getVoiceMails(id, arr).then((r) => setAudios(r?.data));
-  }, [id]);
+    if (id)
+      getVoiceMails(id, arr).then((r) => {
+        console.log(r?.data);
+        const nr = r?.data.filter((a: any) =>
+          arr.find((b: string) => b === a.id)
+        );
+        setAudios(nr);
+      });
+  }, [id, arr]);
 
   return { audios };
 };
@@ -81,6 +88,24 @@ export const upload = async (
   try {
     const req = await axios.post(url, data);
     console.log(req);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteAudio = async (userId: string, audioId: string) => {
+  console.log("deleting ...", userId);
+
+  const url = `${URL}/audio/delete`;
+  const data = {
+    audioId,
+    userId,
+  };
+
+  try {
+    const req = await axios.post(url, data);
+    // console.log(req);
+    return req;
   } catch (err) {
     console.log(err);
   }

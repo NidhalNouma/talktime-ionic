@@ -38,6 +38,13 @@ const addAudio = async (userId, docData) => {
   return r;
 };
 
+const removeAudio = async (userId) => {
+  console.log("Remove audio from user ...");
+  const r = await update(collName, userId, { audio: null });
+
+  return r;
+};
+
 const deleteUser = async (userId) => {
   console.log("Deleting user ...");
   const r = await deletee(collName, userId);
@@ -49,6 +56,14 @@ const likeAudio = async (userId, audioId) => {
   const r = await addToArray(collName, userId, "audioLikes", audioId);
   const r1 = await deleteFromArray(collName, userId, "audioDislikes", audioId);
   return { r, r1 };
+};
+
+const flagAudio = async (userId, audioId, flag) => {
+  console.log("Flaging audio ...");
+  let r = null;
+  if (flag) r = await addToArray(collName, userId, "audioFlaged", audioId);
+  else r = await deleteFromArray(collName, userId, "audioFlaged", audioId);
+  return r;
 };
 
 const dislikeAudio = async (userId, audioId) => {
@@ -64,11 +79,20 @@ const newVoiceMail = async (userId, voiceMailId) => {
   return r;
 };
 
+const removeVoicemail = async (userId, audioId) => {
+  console.log("Removing voicemail ...");
+  const r = await deleteFromArray(collName, userId, "voicemail", audioId);
+  return r;
+};
+
 module.exports = {
   newUser,
   getUser,
   addAudio,
+  removeAudio,
   likeAudio,
   dislikeAudio,
+  flagAudio,
   newVoiceMail,
+  removeVoicemail,
 };

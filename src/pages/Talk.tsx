@@ -4,13 +4,13 @@ import { useParams, useHistory, useLocation } from "react-router-dom";
 import { IonContent, IonPage } from "@ionic/react";
 import Nav from "../components/navbar/Nav";
 import { RecordButton } from "../components/Buttons/CallButton";
-import WaveAndLoader from "../components/waveAndLoader";
+import SingleWave from "../components/waveAndLoader/SingleWave";
 import Wave from "../components/WaveSurface";
 import { HostUrlAudio } from "../components/hostUrl";
 import { IonSpinner } from "@ionic/react";
 
 import { CRecord } from "../hooks/Record";
-import { upload, copyToClipboard } from "../hooks/Audio";
+import { upload, deleteAudio, copyToClipboard } from "../hooks/Audio";
 import { UserContext, getUser } from "../hooks/User";
 
 import { ShowToast } from "../App";
@@ -32,6 +32,7 @@ const Talk: React.FC<tabProps> = ({}) => {
   // console.log(user);
 
   const {
+    stream,
     audio,
     audioUrl,
     record,
@@ -45,7 +46,7 @@ const Talk: React.FC<tabProps> = ({}) => {
       upload(audio, user.id, id, toUser).then((r) => {
         getUser(user.id).then((r) => {
           setUser(r?.data);
-          openToast("Sent", 1);
+          openToast(id ? "Sent" : "Posted", 1);
           if (id) history.goBack();
           else setRecording(false);
         });
@@ -64,7 +65,10 @@ const Talk: React.FC<tabProps> = ({}) => {
       <IonContent fullscreen>
         <div className="App">
           <Nav block={() => {}} />
-          <div className="ion-text-center ion-margin-top full-width">
+          <div
+            className="ion-text-center ion-margin-top full-width"
+            style={{ marginBottom: "auto" }}
+          >
             {<h3>{"See who response back."}</h3>}
 
             {!recording && user && user.audio && (
@@ -76,13 +80,17 @@ const Talk: React.FC<tabProps> = ({}) => {
                   );
                 }}
                 setId={() => {
-                  // setID(resetId(id));
-                  openToast("Deleted", -1);
+                  deleteAudio(user.id, user.audio).then((r: any) => {
+                    getUser(user.id).then((r) => {
+                      setUser(r?.data);
+                      openToast("Deleted", 1);
+                    });
+                  });
                 }}
               />
             )}
           </div>
-          {/* <WaveAndLoader type={state} lstream={lstream} rstream={rstream} /> */}
+          {record === 1 && stream && <SingleWave lstream={stream} />}
 
           {recording && record !== 1 ? (
             <IonSpinner
@@ -116,11 +124,3 @@ const Talk: React.FC<tabProps> = ({}) => {
 };
 
 export default Talk;
-
-function blobToBase64(blob: Blob) {
-  return new Promise((resolve, _) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
-    reader.readAsDataURL(blob);
-  });
-}

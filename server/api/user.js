@@ -33,10 +33,26 @@ app.post("/audio/like", async function (req, res) {
   res.json(r);
 });
 
+app.post("/audio/flag", async function (req, res) {
+  const { userId, audioId, flag } = req.body;
+  if (!userId || !audioId) return res.send({ err: "Missing id" });
+  const r = await user.flagAudio(userId, audioId, flag);
+
+  res.json(r);
+});
+
 app.post("/audio/dislike", async function (req, res) {
   const { userId, audioId } = req.body;
   if (!userId || !audioId) return res.send({ err: "Missing id" });
   const r = await user.dislikeAudio(userId, audioId);
+
+  res.json(r);
+});
+
+app.post("/voicemail/remove", async function (req, res) {
+  const { userId, audioId } = req.body;
+  if (!userId || !audioId) return res.send({ err: "Missing id" });
+  const r = await user.removeVoicemail(userId, audioId);
 
   res.json(r);
 });

@@ -3,11 +3,17 @@ import { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { IonContent, IonPage } from "@ionic/react";
 import Nav from "../components/navbar/Nav";
-import { HostUrli } from "../components/hostUrl";
+import { HostUrlVM } from "../components/hostUrl";
 import { ReplyButton } from "../components/Buttons/CallButton";
 import Wave from "../components/WaveSurface";
 
-import { UserContext, getUser, likeAudio, dislikeAudio } from "../hooks/User";
+import {
+  UserContext,
+  getUser,
+  likeAudio,
+  dislikeAudio,
+  removeVoicemail,
+} from "../hooks/User";
 import { Voicemails, copyToClipboard } from "../hooks/Audio";
 
 import { ShowToast } from "../App";
@@ -41,20 +47,15 @@ const Voicemail: React.FC<tabProps> = ({}) => {
             className="ion-text-center ion-margin-top"
             style={{ marginBottom: "auto" }}
           >
-            <h3>{`You have ${user ? user.voicemail?.length : 0} messages.`}</h3>
+            <h3>{`You have ${audios ? audios?.length : 0} messages.`}</h3>
             {audio?.id && (
-              <HostUrli
+              <HostUrlVM
                 id={audio.id}
                 copyId={() => {
                   copyToClipboard(audio.id, (message: string, type: Number) =>
                     openToast(message, type)
                   );
                 }}
-                flagged={
-                  user?.audioFlaged?.find((a: string) => a === audio.id)
-                    ? true
-                    : false
-                }
                 liked={
                   user?.audioLikes?.find((a: string) => a === audio.id)
                     ? true
@@ -65,7 +66,12 @@ const Voicemail: React.FC<tabProps> = ({}) => {
                     ? true
                     : false
                 }
-                flagFn={() => {}}
+                deleteFn={async () => {
+                  await removeVoicemail(user.id, audio.id);
+                  const r = await getUser(user.id);
+                  setUser(r?.data);
+                  openToast("Deleted", -1);
+                }}
                 likeFn={async () => {
                   if (user?.audioLikes?.find((a: string) => a === audio.id))
                     return;

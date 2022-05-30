@@ -35,6 +35,13 @@ const getAudio = async (audioId) => {
   return r;
 };
 
+const deleteAudio = async (audioId) => {
+  console.log("Deleting audio ...");
+  const r = await deletee(collName, audioId);
+  console.log("Audio deleted: ", r);
+  return r;
+};
+
 const getAllAudios = async () => {
   console.log("Getting all audios ...");
   const r = await getAll(collName);
@@ -56,6 +63,7 @@ const getAllAudiosFrom = async (val) => {
 module.exports = {
   newAudio,
   getAudio,
+  deleteAudio,
   getAllAudios,
   getAllAudiosIn,
   getAllAudiosFrom,

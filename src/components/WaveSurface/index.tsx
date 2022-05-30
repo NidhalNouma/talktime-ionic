@@ -44,7 +44,7 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
         progressColor: "#5da1fa",
         responsive: true,
         partialRender: true,
-        mediaControls: true,
+        // mediaControls: true,
         xhr: {
           cache: "default",
           mode: "no-cors",

@@ -83,6 +83,9 @@ const App: React.FC = () => {
                 <Route exact path="/feed">
                   <Feed />
                 </Route>
+                <Route exact path="/feed/:id">
+                  <Feed />
+                </Route>
                 <Route exact path="/voicemail">
                   <Voicemail />
                 </Route>
