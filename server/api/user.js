@@ -26,9 +26,9 @@ app.post("/get", async function (req, res) {
 });
 
 app.post("/audio/like", async function (req, res) {
-  const { userId, audioId } = req.body;
+  const { userId, audioId, like } = req.body;
   if (!userId || !audioId) return res.send({ err: "Missing id" });
-  const r = await user.likeAudio(userId, audioId);
+  const r = await user.likeAudio(userId, audioId, like);
 
   res.json(r);
 });
@@ -42,9 +42,9 @@ app.post("/audio/flag", async function (req, res) {
 });
 
 app.post("/audio/dislike", async function (req, res) {
-  const { userId, audioId } = req.body;
+  const { userId, audioId, dislike } = req.body;
   if (!userId || !audioId) return res.send({ err: "Missing id" });
-  const r = await user.dislikeAudio(userId, audioId);
+  const r = await user.dislikeAudio(userId, audioId, dislike);
 
   res.json(r);
 });

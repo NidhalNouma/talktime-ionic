@@ -98,20 +98,22 @@ const Feed: React.FC<tabProps> = ({}) => {
                   openToast(!f ? "Flagged" : "Unflagged", 1);
                 }}
                 likeFn={async () => {
-                  if (user?.audioLikes?.find((a: string) => a === audio.id))
-                    return;
-                  await likeAudio(user.id, audio.id);
+                  const l = user?.audioLikes?.find(
+                    (a: string) => a === audio.id
+                  );
+                  await likeAudio(user.id, audio.id, !l);
                   const r = await getUser(user.id);
                   setUser(r?.data);
-                  openToast("Liked", 1);
+                  openToast(!l ? "Liked" : "Unliked", 1);
                 }}
                 dislikeFn={async () => {
-                  if (user?.audioDislikes?.find((a: string) => a === audio.id))
-                    return;
-                  await dislikeAudio(user.id, audio.id);
+                  const d = user?.audioDislikes?.find(
+                    (a: string) => a === audio.id
+                  );
+                  await dislikeAudio(user.id, audio.id, !d);
                   const r = await getUser(user.id);
                   setUser(r?.data);
-                  openToast("Disliked", 1);
+                  openToast(!d ? "Disliked" : "Undisliked", 1);
                 }}
               />
             )}

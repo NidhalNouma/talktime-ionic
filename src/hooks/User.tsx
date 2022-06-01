@@ -43,18 +43,26 @@ export const getUser = async (id: string) => {
   return r;
 };
 
-export const likeAudio = async (userId: string, audioId: string) => {
+export const likeAudio = async (
+  userId: string,
+  audioId: string,
+  like: boolean
+) => {
   const url = `${URL}/user/audio/like`;
   if (!userId || !audioId) return null;
-  const r = await axios.post(url, { userId, audioId });
+  const r = await axios.post(url, { userId, audioId, like });
   // console.log(r);
   return r;
 };
 
-export const dislikeAudio = async (userId: string, audioId: string) => {
+export const dislikeAudio = async (
+  userId: string,
+  audioId: string,
+  dislike: boolean
+) => {
   const url = `${URL}/user/audio/dislike`;
   if (!userId || !audioId) return null;
-  const r = await axios.post(url, { userId, audioId });
+  const r = await axios.post(url, { userId, audioId, dislike });
   // console.log(r);
   return r;
 };

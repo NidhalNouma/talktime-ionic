@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 
+import { IonIcon } from "@ionic/react";
+import { play, pause } from "ionicons/icons";
+
 import "./index.css";
 
 interface propsWave {
@@ -12,15 +15,29 @@ interface propsWave {
 const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
   const wave = useRef<any>(null);
   const [blob, setBlob] = useState<any>(null);
+  const [speed, setSpeed] = useState(1);
+  const [plays, setPlays] = useState(false);
 
   const w = useRef<any>(null);
 
   useEffect(() => {
     return () => {
-      console.log("dd");
       w.current?.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    if (w.current) {
+      if (plays) w.current.play();
+      else w.current.pause();
+    }
+  }, [plays, w.current]);
+
+  useEffect(() => {
+    if (w.current) {
+      w.current.setPlaybackRate(speed);
+    }
+  }, [speed]);
 
   useEffect(() => {
     if (isBlob)
@@ -31,8 +48,8 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
           setBlob(objectURL);
         });
     return () => {
-      console.log("dd", w);
       w?.current?.destroy();
+      setPlays(false);
     };
   }, [audio]);
 
@@ -44,6 +61,7 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
         progressColor: "#5da1fa",
         responsive: true,
         partialRender: true,
+        height: 100,
         // mediaControls: true,
         xhr: {
           cache: "default",
@@ -71,13 +89,18 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
   useEffect(() => {
     if (w) {
       w.current.on("ready", () => {
-        w.current.play();
+        // w.current.play();
+        // setPlays(true);
       });
 
       w.current.on("error", (err: any) => console.log("wave err ... ", err));
       w.current.on("destroy", () => {
         w.current = null;
         console.log("destroy wave ...");
+      });
+
+      w.current.on("finish", () => {
+        setPlays(false);
       });
     }
 
@@ -86,12 +109,47 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
 
   return (
     <React.Fragment>
-      <div
-        onClick={() => w.current?.play()}
-        id={`waveform-${ida}`}
-        className="waveform"
-        ref={wave}
-      ></div>
+      <div className="wave-div">
+        <div
+          onClick={() => w.current?.play()}
+          id={`waveform-${ida}`}
+          className="waveform"
+          ref={wave}
+        ></div>
+        <div className="waveform-buttons">
+          <button className="w-button" onClick={() => setPlays(!plays)}>
+            <IonIcon
+              icon={plays ? pause : play}
+              color="medium"
+              className="iconi"
+            />
+          </button>
+          <button
+            className={`w-button ${speed === 1 ? "w-button-c" : ""}`}
+            onClick={() => {
+              setSpeed(1);
+            }}
+          >
+            1x
+          </button>
+          <button
+            className={`w-button ${speed === 1.5 ? "w-button-c" : ""}`}
+            onClick={() => {
+              setSpeed(1.5);
+            }}
+          >
+            1.5x
+          </button>
+          <button
+            className={`w-button ${speed === 2 ? "w-button-c" : ""}`}
+            onClick={() => {
+              setSpeed(2);
+            }}
+          >
+            2x
+          </button>
+        </div>
+      </div>
     </React.Fragment>
   );
 };

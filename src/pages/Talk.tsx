@@ -69,7 +69,13 @@ const Talk: React.FC<tabProps> = ({}) => {
             className="ion-text-center ion-margin-top full-width"
             style={{ marginBottom: "auto" }}
           >
-            {<h3>{"See who response back."}</h3>}
+            {
+              <h3>
+                {!user?.audio
+                  ? "Send voicemails to random people."
+                  : "Share link to receive voicemails. "}
+              </h3>
+            }
 
             {!recording && user && user.audio && (
               <HostUrlAudio

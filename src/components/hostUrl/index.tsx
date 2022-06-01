@@ -26,7 +26,7 @@ const HostUrl: React.FC<propsCallButton> = ({ id, setId, copyId }) => {
       <button className="buttoni" onClick={setId}>
         <IonIcon icon={refresh} color="medium" className="iconi" />
       </button>
-      <h3>{id}</h3>
+      <h3 onClick={copyId}>{id}</h3>
       <button className="buttoni" onClick={copyId}>
         <IonIcon icon={copy} color="medium" className="iconi" />
       </button>
@@ -75,7 +75,7 @@ export const HostUrli: React.FC<propsHUi> = ({
           />
         </button>
       </div>
-      <h3>{id}</h3>
+      <h3 onClick={copyId}>{id}</h3>
       <div className="sep">
         <button className="buttoni" onClick={copyId}>
           <IonIcon icon={copy} color="medium" className="iconi" />
@@ -104,7 +104,7 @@ export const HostUrlAudio: React.FC<propsCallButton> = ({
       <button className="buttoni" onClick={setId}>
         <IonIcon icon={trash} color="medium" className="iconi" />
       </button>
-      <h3>{id}</h3>
+      <h3 onClick={copyId}>{id}</h3>
       <button className="buttoni" onClick={copyId}>
         <IonIcon icon={copy} color="medium" className="iconi" />
       </button>
@@ -147,7 +147,7 @@ export const HostUrlVM: React.FC<propsHUVM> = ({
           <IonIcon icon={trash} color="medium" className="iconi" />
         </button>
       </div>
-      <h3>{id}</h3>
+      <h3 onClick={copyId}>{id}</h3>
       <div className="sep">
         <button className="buttoni" onClick={copyId}>
           <IonIcon icon={copy} color="medium" className="iconi" />

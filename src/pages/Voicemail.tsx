@@ -47,7 +47,9 @@ const Voicemail: React.FC<tabProps> = ({}) => {
             className="ion-text-center ion-margin-top"
             style={{ marginBottom: "auto" }}
           >
-            <h3>{`You have ${audios ? audios?.length : 0} messages.`}</h3>
+            <h3>{`${
+              audios?.length > 0 ? ci + 1 + "/" + audios?.length : 0
+            } messages.`}</h3>
             {audio?.id && (
               <HostUrlVM
                 id={audio.id}
@@ -73,20 +75,22 @@ const Voicemail: React.FC<tabProps> = ({}) => {
                   openToast("Deleted", -1);
                 }}
                 likeFn={async () => {
-                  if (user?.audioLikes?.find((a: string) => a === audio.id))
-                    return;
-                  await likeAudio(user.id, audio.id);
+                  const l = user?.audioLikes?.find(
+                    (a: string) => a === audio.id
+                  );
+                  await likeAudio(user.id, audio.id, !l);
                   const r = await getUser(user.id);
                   setUser(r?.data);
-                  openToast("Liked", 1);
+                  openToast(!l ? "Liked" : "Unliked", 1);
                 }}
                 dislikeFn={async () => {
-                  if (user?.audioDislikes?.find((a: string) => a === audio.id))
-                    return;
-                  await dislikeAudio(user.id, audio.id);
+                  const d = user?.audioDislikes?.find(
+                    (a: string) => a === audio.id
+                  );
+                  await dislikeAudio(user.id, audio.id, !d);
                   const r = await getUser(user.id);
                   setUser(r?.data);
-                  openToast("Disliked", 1);
+                  openToast(!d ? "Disliked" : "Undisliked", 1);
                 }}
               />
             )}

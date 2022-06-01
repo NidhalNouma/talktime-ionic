@@ -51,11 +51,14 @@ const deleteUser = async (userId) => {
   return r;
 };
 
-const likeAudio = async (userId, audioId) => {
+const likeAudio = async (userId, audioId, like) => {
   console.log("Liking audio ...");
-  const r = await addToArray(collName, userId, "audioLikes", audioId);
-  const r1 = await deleteFromArray(collName, userId, "audioDislikes", audioId);
-  return { r, r1 };
+  let r = null;
+  if (like) {
+    r = await addToArray(collName, userId, "audioLikes", audioId);
+    await deleteFromArray(collName, userId, "audioDislikes", audioId);
+  } else r = await deleteFromArray(collName, userId, "audioLikes", audioId);
+  return r;
 };
 
 const flagAudio = async (userId, audioId, flag) => {

@@ -90,7 +90,7 @@ const App: React.FC = () => {
                   <Voicemail />
                 </Route>
                 <Route exact path="/">
-                  <Redirect to="/feed" />
+                  <Redirect to="/talk" />
                 </Route>
               </IonRouterOutlet>
               <IonTabBar
@@ -105,13 +105,13 @@ const App: React.FC = () => {
                 <IonIcon icon={call} />
                 <IonLabel>Live</IonLabel>
               </IonTabButton> */}
-                <IonTabButton tab="Talk" href="/talk">
-                  <IonIcon icon={mic} />
-                  <IonLabel>Talk</IonLabel>
-                </IonTabButton>
                 <IonTabButton tab="Feed" href="/feed">
                   <IonIcon icon={globe} />
                   <IonLabel>Feed</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="Talk" href="/talk">
+                  <IonIcon icon={mic} />
+                  <IonLabel>Talk</IonLabel>
                 </IonTabButton>
                 <IonTabButton tab="Voicemail" href="/voicemail">
                   <IonIcon icon={recording} />
