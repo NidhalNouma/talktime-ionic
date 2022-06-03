@@ -106,16 +106,30 @@ export const ReplyButton: React.FC<propsCallButton> = ({
 }) => {
   return (
     <div className="callButton">
-      <button onClick={prev} className={`button arrl`}>
-        {"<<"}
-      </button>
+      {prev && (
+        <button onClick={prev} className={`button arrl`}>
+          {"<<"}
+        </button>
+      )}
 
       <button onClick={onClick} className={`button ${name}`}>
         {name}
       </button>
 
-      <button onClick={next} className={`button arrr`}>
-        {">>"}
+      {next && (
+        <button onClick={next} className={`button arrr`}>
+          {">>"}
+        </button>
+      )}
+    </div>
+  );
+};
+
+export const CopyButton: React.FC<propsCallButton> = ({ onClick, name }) => {
+  return (
+    <div className="callButton">
+      <button onClick={onClick} className={`button Call ${name}`}>
+        {name}
       </button>
     </div>
   );

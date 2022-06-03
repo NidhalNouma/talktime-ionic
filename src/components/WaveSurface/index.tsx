@@ -2,7 +2,17 @@ import React, { useRef, useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 
 import { IonIcon } from "@ionic/react";
-import { play, pause } from "ionicons/icons";
+import {
+  play,
+  pause,
+  trashOutline,
+  thumbsUp,
+  thumbsDown,
+  flag,
+  thumbsUpOutline,
+  thumbsDownOutline,
+  flagOutline,
+} from "ionicons/icons";
 
 import "./index.css";
 
@@ -10,9 +20,31 @@ interface propsWave {
   audio: string;
   ida: string;
   isBlob: boolean;
+  deletee?: boolean | undefined;
+  like?: boolean | undefined;
+  dislike?: boolean | undefined;
+  flaged?: boolean | undefined;
+  onDelete?: Function;
+  onLike?: Function;
+  onDislike?: Function;
+  onFlag?: Function;
 }
 
-const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
+let init = 0;
+
+const Wave: React.FC<propsWave> = ({
+  audio,
+  ida,
+  isBlob,
+  deletee,
+  like,
+  dislike,
+  flaged,
+  onDelete,
+  onLike,
+  onDislike,
+  onFlag,
+}) => {
   const wave = useRef<any>(null);
   const [blob, setBlob] = useState<any>(null);
   const [speed, setSpeed] = useState(1);
@@ -23,13 +55,14 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
   useEffect(() => {
     return () => {
       w.current?.destroy();
+      w.current?.unAll();
     };
   }, []);
 
   useEffect(() => {
     if (w.current) {
-      if (plays) w.current.play();
-      else w.current.pause();
+      if (plays && !w.current.isPlaying()) w.current.play();
+      else if (!plays && w.current.isPlaying()) w.current.pause();
     }
   }, [plays, w.current]);
 
@@ -89,7 +122,8 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
   useEffect(() => {
     if (w) {
       w.current.on("ready", () => {
-        // w.current.play();
+        // w.current.playPause();
+        if (init > 0) w.current.play();
         // setPlays(true);
       });
 
@@ -102,6 +136,15 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
       w.current.on("finish", () => {
         setPlays(false);
       });
+
+      w.current.on("pause", () => {
+        if (plays) setPlays(false);
+      });
+
+      w.current.on("play", () => {
+        if (!plays) setPlays(true);
+        init++;
+      });
     }
 
     if (w && blob) w.current.load(blob);
@@ -111,12 +154,21 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
     <React.Fragment>
       <div className="wave-div">
         <div
-          onClick={() => w.current?.play()}
+          // onClick={() => w.current?.play()}
           id={`waveform-${ida}`}
           className="waveform"
           ref={wave}
         ></div>
         <div className="waveform-buttons">
+          {like !== undefined && (
+            <button className="w-button" onClick={() => onLike && onLike()}>
+              <IonIcon
+                icon={like ? thumbsUp : thumbsUpOutline}
+                color="medium"
+                className="iconi"
+              />
+            </button>
+          )}
           <button className="w-button" onClick={() => setPlays(!plays)}>
             <IonIcon
               icon={plays ? pause : play}
@@ -124,30 +176,32 @@ const Wave: React.FC<propsWave> = ({ audio, ida, isBlob }) => {
               className="iconi"
             />
           </button>
-          <button
-            className={`w-button ${speed === 1 ? "w-button-c" : ""}`}
-            onClick={() => {
-              setSpeed(1);
-            }}
-          >
-            1x
-          </button>
-          <button
-            className={`w-button ${speed === 1.5 ? "w-button-c" : ""}`}
-            onClick={() => {
-              setSpeed(1.5);
-            }}
-          >
-            1.5x
-          </button>
-          <button
-            className={`w-button ${speed === 2 ? "w-button-c" : ""}`}
-            onClick={() => {
-              setSpeed(2);
-            }}
-          >
-            2x
-          </button>
+          {deletee !== undefined && (
+            <button className="w-button" onClick={() => onDelete && onDelete()}>
+              <IonIcon icon={trashOutline} color="medium" className="iconi" />
+            </button>
+          )}
+          {flaged !== undefined && (
+            <button className="w-button" onClick={() => onFlag && onFlag()}>
+              <IonIcon
+                icon={flaged ? flag : flagOutline}
+                color="medium"
+                className="iconi"
+              />
+            </button>
+          )}
+          {dislike !== undefined && (
+            <button
+              className="w-button"
+              onClick={() => onDislike && onDislike()}
+            >
+              <IonIcon
+                icon={dislike ? thumbsDown : thumbsDownOutline}
+                color="medium"
+                className="iconi"
+              />
+            </button>
+          )}
         </div>
       </div>
     </React.Fragment>

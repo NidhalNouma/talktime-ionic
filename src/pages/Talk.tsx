@@ -8,6 +8,7 @@ import SingleWave from "../components/waveAndLoader/SingleWave";
 import Wave from "../components/WaveSurface";
 import { HostUrlAudio } from "../components/hostUrl";
 import { IonSpinner } from "@ionic/react";
+import Record from "../components/Record";
 
 import { CRecord } from "../hooks/Record";
 import { upload, deleteAudio, copyToClipboard } from "../hooks/Audio";
@@ -32,6 +33,7 @@ const Talk: React.FC<tabProps> = ({}) => {
   // console.log(user);
 
   const {
+    time,
     stream,
     audio,
     audioUrl,
@@ -48,7 +50,10 @@ const Talk: React.FC<tabProps> = ({}) => {
           setUser(r?.data);
           openToast(id ? "Sent" : "Posted", 1);
           if (id) history.goBack();
-          else setRecording(false);
+          else {
+            setRecording(false);
+            history.push("/share-audio");
+          }
         });
       });
     }
@@ -65,63 +70,45 @@ const Talk: React.FC<tabProps> = ({}) => {
       <IonContent fullscreen>
         <div className="App">
           <Nav block={() => {}} />
-          <div
-            className="ion-text-center ion-margin-top full-width"
-            style={{ marginBottom: "auto" }}
-          >
-            {
-              <h3>
-                {!user?.audio
-                  ? "Send voicemails to random people."
-                  : "Share link to receive voicemails. "}
-              </h3>
-            }
-
-            {!recording && user && user.audio && (
-              <HostUrlAudio
-                id={user.audio}
-                copyId={() => {
-                  copyToClipboard(user.audio, (message: string, type: Number) =>
-                    openToast(message, type)
-                  );
-                }}
-                setId={() => {
-                  deleteAudio(user.id, user.audio).then((r: any) => {
-                    getUser(user.id).then((r) => {
-                      setUser(r?.data);
-                      openToast("Deleted", 1);
-                    });
-                  });
-                }}
-              />
-            )}
-          </div>
-          {record === 1 && stream && <SingleWave lstream={stream} />}
-
-          {recording && record !== 1 ? (
-            <IonSpinner
-              className="spinner"
-              style={{ margin: "auto" }}
-              name="dots"
-            />
-          ) : (
+          {record !== 1 ? (
             <Fragment>
-              {/* {audioUrl && <Wave audio={audioUrl} />} */}
-              {!recording && user?.audio && record !== 1 && (
-                <Wave
-                  audio={user?.audioDoc?.audioUrl}
-                  isBlob={true}
-                  ida={user.audio}
+              <div
+                className="ion-text-center ion-margin-top full-width"
+                style={{ marginBottom: "auto" }}
+              >
+                {
+                  <h3>
+                    {record === 1
+                      ? time
+                      : "Record a message to start an audio survey."}
+                  </h3>
+                }
+              </div>
+              {record === 1 && stream && <SingleWave lstream={stream} />}
+              {recording && record !== 1 ? (
+                <IonSpinner
+                  className="spinner"
+                  style={{ margin: "auto" }}
+                  name="dots"
+                />
+              ) : (
+                <RecordButton
+                  onClick={() => setRecord(record === 1 ? 0 : 1)}
+                  name={record === 1 ? "End" : "Record"}
+                  muted={pauseRecording}
+                  mute={() => setPauseRecording(!pauseRecording)}
                 />
               )}
-
-              <RecordButton
-                onClick={() => setRecord(record === 1 ? 0 : 1)}
-                name={record === 1 ? "End" : "Record"}
-                muted={pauseRecording}
-                mute={() => setPauseRecording(!pauseRecording)}
-              />
             </Fragment>
+          ) : (
+            <Record
+              stream={stream}
+              record={record}
+              time={time}
+              setRecord={setRecord}
+              pauseRecording={pauseRecording}
+              setPauseRecording={setPauseRecording}
+            />
           )}
         </div>
       </IonContent>

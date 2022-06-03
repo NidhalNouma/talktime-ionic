@@ -49,14 +49,35 @@ export function CRecord(id: string) {
   const [record, setRecord] = useState(id ? 1 : -1);
   const [pauseRecording, setPauseRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<any>(null);
+  const [sec, setSec] = useState(0);
+  const [time, setTime] = useState("00:00");
 
   useEffect(() => {
+    let intr: any = null;
     if (record === 1) {
+      if (sec > 0) setSec(0);
       start();
+
+      intr = setInterval(() => setSec((t) => t + 1), 1000);
     } else if (record === 0) {
       stop();
     }
+
+    return () => {
+      if (intr) clearInterval(intr);
+    };
   }, [record]);
+
+  useEffect(() => {
+    if (sec >= 600) {
+      setRecord(0);
+      setSec(0);
+    }
+
+    const min = Math.floor(sec / 60);
+    const secs = sec % 60;
+    setTime(`${min < 10 ? "0" + min : min}:${secs < 10 ? "0" + secs : secs}`);
+  }, [sec]);
 
   useEffect(() => {
     if (audio) setAudioUrl(URL.createObjectURL(audio));
@@ -75,5 +96,6 @@ export function CRecord(id: string) {
     setRecord,
     pauseRecording,
     setPauseRecording,
+    time,
   };
 }

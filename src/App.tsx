@@ -10,11 +10,20 @@ import {
   setupIonicReact,
   IonIcon,
 } from "@ionic/react";
-import { call, people, mic, globe, recording } from "ionicons/icons";
+import {
+  call,
+  people,
+  micOutline,
+  arrowRedoOutline,
+  volumeMediumOutline,
+  mailOutline,
+  mailUnreadOutline,
+} from "ionicons/icons";
 import { IonReactRouter } from "@ionic/react-router";
 import Live from "./pages/Live";
 import Host from "./pages/Host";
 import Talk from "./pages/Talk";
+import ShareAudio from "./pages/ShareAudio";
 import Feed from "./pages/Feed";
 import Voicemail from "./pages/Voicemail";
 import Toast from "./components/Toast";
@@ -77,6 +86,9 @@ const App: React.FC = () => {
                 <Route exact path="/talk">
                   <Talk />
                 </Route>
+                <Route exact path="/share-audio">
+                  <ShareAudio />
+                </Route>
                 <Route exact path="/talk/:id">
                   <Talk />
                 </Route>
@@ -105,17 +117,25 @@ const App: React.FC = () => {
                 <IonIcon icon={call} />
                 <IonLabel>Live</IonLabel>
               </IonTabButton> */}
-                <IonTabButton tab="Feed" href="/feed">
-                  <IonIcon icon={globe} />
-                  <IonLabel>Feed</IonLabel>
-                </IonTabButton>
                 <IonTabButton tab="Talk" href="/talk">
-                  <IonIcon icon={mic} />
-                  <IonLabel>Talk</IonLabel>
+                  <IonIcon icon={micOutline} />
+                  <IonLabel>Record</IonLabel>
+                </IonTabButton>
+                <IonTabButton
+                  tab="Share-audio"
+                  href="/share-audio"
+                  style={{ display: `${!user?.audio ? "none" : "flex"}` }}
+                >
+                  <IonIcon icon={arrowRedoOutline} />
+                  <IonLabel>Share</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="Listen" href="/feed">
+                  <IonIcon icon={volumeMediumOutline} />
+                  <IonLabel>Listen</IonLabel>
                 </IonTabButton>
                 <IonTabButton tab="Voicemail" href="/voicemail">
-                  <IonIcon icon={recording} />
-                  <IonLabel>Voicemail</IonLabel>
+                  <IonIcon icon={mailOutline} />
+                  <IonLabel>Inbox</IonLabel>
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>
