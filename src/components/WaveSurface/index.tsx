@@ -34,6 +34,29 @@ interface propsWave {
 
 let init = 0;
 
+const colors = [
+  "#383a3e",
+  "#f44336",
+  "#e91e63",
+  "#9c27b0",
+  "#673ab7",
+  "#3f51b5",
+  "#2196f3",
+  "#03a9f4",
+  "#00bcd4",
+  "#009688",
+  "#4caf50",
+  "#8bc34a",
+  "#cddc39",
+  "#ffeb3b",
+  "#ffc107",
+  "#ff9800",
+  "#ff5722",
+  "#795548",
+  "#9e9e9e",
+  "#607d8b",
+];
+
 const Wave: React.FC<propsWave> = ({
   audio,
   ida,
@@ -100,11 +123,16 @@ const Wave: React.FC<propsWave> = ({
       w.current = WaveSurfer.create({
         container: `#waveform-${ida}`,
         // container: wave.current,
-        waveColor: "#383a3e",
+        waveColor: colors[Math.floor(Math.random() * colors.length)],
         progressColor: "#5da1fa",
         responsive: true,
         // partialRender: true,
         height: 120,
+        barHeight: 2,
+        barMinHeight: 1.5,
+        // barWidth: 1,
+        closeAudioContext: true,
+        removeMediaElementOnDestroy: false,
         // mediaControls: true,
         xhr: {
           cache: "default",

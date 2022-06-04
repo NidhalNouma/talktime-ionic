@@ -42,7 +42,7 @@ const Talk: React.FC<tabProps> = ({}) => {
                     getUser(user.id).then((r) => {
                       setUser(r?.data);
                       openToast("Deleted", 1);
-                      history.push("/talk");
+                      history.push("/record");
                     });
                   });
                 }}
