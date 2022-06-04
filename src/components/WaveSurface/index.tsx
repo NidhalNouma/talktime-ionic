@@ -53,12 +53,12 @@ const Wave: React.FC<propsWave> = ({
   const [plays, setPlays] = useState(false);
 
   const w = useRef<any>(null);
-  const audioRef = useRef<any>(null);
+  // const audioRef = useRef<any>(null);
 
-  useEffect(() => {
-    if (plays && audioRef.current) audioRef.current.play();
-    else if (!plays && audioRef.current) audioRef.current.pause();
-  }, [plays, audioRef]);
+  // useEffect(() => {
+  //   if (plays && audioRef.current) audioRef.current.play();
+  //   else if (!plays && audioRef.current) audioRef.current.pause();
+  // }, [plays, audioRef]);
 
   useEffect(() => {
     return () => {
@@ -159,13 +159,13 @@ const Wave: React.FC<propsWave> = ({
           className="waveform"
           ref={wave}
         ></div>
-        <audio
+        {/* <audio
           id={`audio-${ida}`}
           ref={audioRef}
           src={blob}
           controls
           style={{ display: "none" }}
-        ></audio>
+        ></audio> */}
         <div className="waveform-buttons">
           {like !== undefined && (
             <button className="w-button" onClick={() => onLike && onLike()}>
