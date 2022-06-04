@@ -1,4 +1,4 @@
-export const URL = process.env.REACT_APP_DEV
+export const URL = process.env.REACT_APP_DEV // "http://192.168.1.6:8080"
   ? "http://localhost:8080"
   : "https://talktime.us";
 // export const URL = window.location.origin;

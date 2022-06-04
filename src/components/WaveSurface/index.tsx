@@ -122,7 +122,7 @@ const Wave: React.FC<propsWave> = ({
     if (w) {
       w.current.on("ready", () => {
         // w.current.playPause();
-        w.current.setVolume(0);
+        w.current.setVolume(1);
         if (init > 0) w.current.play();
         // setPlays(true);
       });
@@ -153,6 +153,12 @@ const Wave: React.FC<propsWave> = ({
   return (
     <React.Fragment>
       <div className="wave-div">
+        <div
+          // onClick={() => w.current?.play()}
+          id={`waveform-${ida}`}
+          className="waveform"
+          ref={wave}
+        ></div>
         <audio
           id={`audio-${ida}`}
           ref={audioRef}
@@ -160,12 +166,6 @@ const Wave: React.FC<propsWave> = ({
           controls
           style={{ display: "none" }}
         ></audio>
-        <div
-          // onClick={() => w.current?.play()}
-          id={`waveform-${ida}`}
-          className="waveform"
-          ref={wave}
-        ></div>
         <div className="waveform-buttons">
           {like !== undefined && (
             <button className="w-button" onClick={() => onLike && onLike()}>
