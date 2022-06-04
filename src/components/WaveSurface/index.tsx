@@ -124,16 +124,14 @@ const Wave: React.FC<propsWave> = ({
         container: `#waveform-${ida}`,
         // container: wave.current,
         waveColor: colors[Math.floor(Math.random() * colors.length)],
+        // waveColor: colors[0],
         progressColor: "#5da1fa",
         responsive: true,
-        // partialRender: true,
+        partialRender: true,
         height: 120,
         barHeight: 2,
         barMinHeight: 1.5,
         // barWidth: 1,
-        closeAudioContext: true,
-        removeMediaElementOnDestroy: false,
-        // mediaControls: true,
         xhr: {
           cache: "default",
           mode: "no-cors",
@@ -150,7 +148,7 @@ const Wave: React.FC<propsWave> = ({
     if (w) {
       w.current.on("ready", () => {
         // w.current.playPause();
-        w.current.setVolume(1);
+        // w.current.setVolume(1);
         if (init > 0) w.current.play();
         // setPlays(true);
       });
