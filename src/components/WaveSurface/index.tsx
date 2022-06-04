@@ -16,6 +16,8 @@ import {
 
 import "./index.css";
 
+const Wavei = require("wave-visualizer");
+
 interface propsWave {
   audio: string;
   ida: string;
@@ -51,6 +53,12 @@ const Wave: React.FC<propsWave> = ({
   const [plays, setPlays] = useState(false);
 
   const w = useRef<any>(null);
+  const audioRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (plays && audioRef.current) audioRef.current.play();
+    else if (!plays && audioRef.current) audioRef.current.pause();
+  }, [plays, audioRef]);
 
   useEffect(() => {
     return () => {
@@ -61,8 +69,9 @@ const Wave: React.FC<propsWave> = ({
 
   useEffect(() => {
     if (w.current) {
-      if (plays && !w.current.isPlaying()) w.current.play();
-      else if (!plays && w.current.isPlaying()) w.current.pause();
+      if (plays && !w.current.isPlaying()) {
+        w.current.play();
+      } else if (!plays && w.current.isPlaying()) w.current.pause();
     }
   }, [plays, w.current]);
 
@@ -102,10 +111,6 @@ const Wave: React.FC<propsWave> = ({
           mode: "no-cors",
           method: "GET",
           credentials: "include",
-          // headers: [
-          //   { key: "cache-control", value: "no-cache" },
-          //   { key: "pragma", value: "no-cache" },
-          // ],
         },
       });
     }
@@ -113,20 +118,11 @@ const Wave: React.FC<propsWave> = ({
     return () => w?.current?.destroy();
   }, [wave, audio]);
 
-  // useEffect(() => {
-  //   if (!isBlob && audio && wave.current) wave.current.load(audio);
-  // }, [audio, wave.current]);
-
-  // useEffect(() => {
-  //   console.log("blob", blob, wave.current);
-  //   if (blob && audio && wave.current) wave.current.load(blob);
-  // }, [blob, wave.current]);
-
   useEffect(() => {
     if (w) {
       w.current.on("ready", () => {
         // w.current.playPause();
-        w.current.setVolume(1);
+        w.current.setVolume(0);
         if (init > 0) w.current.play();
         // setPlays(true);
       });
@@ -157,12 +153,139 @@ const Wave: React.FC<propsWave> = ({
   return (
     <React.Fragment>
       <div className="wave-div">
+        <audio
+          id={`audio-${ida}`}
+          ref={audioRef}
+          src={blob}
+          controls
+          style={{ display: "none" }}
+        ></audio>
         <div
           // onClick={() => w.current?.play()}
           id={`waveform-${ida}`}
           className="waveform"
           ref={wave}
         ></div>
+        <div className="waveform-buttons">
+          {like !== undefined && (
+            <button className="w-button" onClick={() => onLike && onLike()}>
+              <IonIcon
+                icon={like ? thumbsUp : thumbsUpOutline}
+                color="medium"
+                className="iconi"
+              />
+            </button>
+          )}
+          <button className="w-button" onClick={() => setPlays(!plays)}>
+            <IonIcon
+              icon={plays ? pause : play}
+              color="medium"
+              className="iconi"
+            />
+          </button>
+          {deletee !== undefined && (
+            <button className="w-button" onClick={() => onDelete && onDelete()}>
+              <IonIcon icon={trashOutline} color="medium" className="iconi" />
+            </button>
+          )}
+          {flaged !== undefined && (
+            <button className="w-button" onClick={() => onFlag && onFlag()}>
+              <IonIcon
+                icon={flaged ? flag : flagOutline}
+                color="medium"
+                className="iconi"
+              />
+            </button>
+          )}
+          {dislike !== undefined && (
+            <button
+              className="w-button"
+              onClick={() => onDislike && onDislike()}
+            >
+              <IonIcon
+                icon={dislike ? thumbsDown : thumbsDownOutline}
+                color="medium"
+                className="iconi"
+              />
+            </button>
+          )}
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+const Wave1: React.FC<propsWave> = ({
+  audio,
+  ida,
+  isBlob,
+  deletee,
+  like,
+  dislike,
+  flaged,
+  onDelete,
+  onLike,
+  onDislike,
+  onFlag,
+}) => {
+  const waveRef = useRef<any>(null);
+  const audioRef = useRef<any>(null);
+  const [blob, setBlob] = useState<any>(null);
+  const [plays, setPlays] = useState(false);
+
+  const [lwave, setLwave] = useState<any>(new Wavei());
+
+  useEffect(() => {
+    // setLwave(new Wavei());
+    if (isBlob)
+      fetch(audio)
+        .then((res) => res.blob()) // Gets the response and returns it as a blob
+        .then((blob) => {
+          let objectURL = URL.createObjectURL(blob);
+          setBlob(objectURL);
+        });
+
+    return () => {
+      setPlays(false);
+    };
+  }, [audio]);
+
+  useEffect(() => {
+    if (lwave && audioRef.current && waveRef.current) {
+      lwave.fromElement(`audio-${ida}`, `wave-${ida}`, {
+        type: "shine",
+        colors: ["rgba(45, 134, 233, 1)", "white", "blue"],
+      });
+    }
+
+    return () => {
+      lwave.stopStream();
+      // setLwave(null);
+    };
+  }, [lwave, audioRef, waveRef, audio]);
+
+  useEffect(() => {
+    if (plays && audioRef.current) {
+      audioRef.current.play();
+      init++;
+    } else if (!plays && audioRef.current) audioRef.current.pause();
+  }, [plays, audioRef]);
+
+  return (
+    <React.Fragment>
+      <div className="wave-div">
+        <audio
+          id={`audio-${ida}`}
+          ref={audioRef}
+          src={blob}
+          controls
+          style={{ display: "none" }}
+        ></audio>
+        <canvas
+          ref={waveRef}
+          style={{ maxHeight: "110px" }}
+          id={`wave-${ida}`}
+        ></canvas>
         <div className="waveform-buttons">
           {like !== undefined && (
             <button className="w-button" onClick={() => onLike && onLike()}>

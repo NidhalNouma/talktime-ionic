@@ -34,7 +34,7 @@ export const Voicemails = (id: string, arr: Array<string>) => {
   useEffect(() => {
     if (id)
       getVoiceMails(id, arr).then((r) => {
-        console.log(r?.data);
+        // console.log(r?.data);
         const nr = r?.data.filter((a: any) =>
           arr.find((b: string) => b === a.id)
         );
@@ -73,7 +73,7 @@ export const getVoiceMails = async (
 
   try {
     const req = await axios.post(url, data);
-    console.log(req);
+    // console.log(req);
     return req;
   } catch (err) {
     console.log(err);

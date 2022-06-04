@@ -59,11 +59,11 @@ const Voicemail: React.FC<tabProps> = ({}) => {
   useEffect(() => {
     if (audios?.length > 0 && ci < audios.length && ci >= 0) {
       setAudio(audios[ci]);
-      console.log(audios[ci]);
+      // console.log(audios[ci]);
     } else if (audios?.length === ci) setCi(0);
     else if (ci < 0) setCi(audios.length - 1);
 
-    console.log(audios);
+    // console.log(audios);
   }, [ci, audios]);
 
   const bind = useDrag(({ down, movement: [mx, my] }) => {
