@@ -10,6 +10,8 @@ app.use(bodyParser.raw());
 const audio = require("../controller/audio");
 const user = require("../controller/user");
 
+const io = require("../app");
+
 app.post("/add", async function (req, res) {
   let { file, userId, replyToAudio, replyToUser } = req.body;
   if (!file || !userId) return res.send({ err: "Missing file or user" });
@@ -21,6 +23,9 @@ app.post("/add", async function (req, res) {
   const a = await audio.newAudio(file, userId, replyToAudio, replyToUser);
   const nu = await user.addAudio(userId, a);
   if (replyToAudio) await user.newVoiceMail(replyToUser, a);
+
+  const na = await audio.getAudio(a);
+  io.emit("newAudio", na);
 
   res.json(a);
 });

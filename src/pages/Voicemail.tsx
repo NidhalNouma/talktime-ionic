@@ -59,9 +59,11 @@ const Voicemail: React.FC<tabProps> = ({}) => {
   useEffect(() => {
     if (audios?.length > 0 && ci < audios.length && ci >= 0) {
       setAudio(audios[ci]);
-      // console.log(audios[ci]);
+      console.log(audios[ci]);
     } else if (audios?.length === ci) setCi(0);
     else if (ci < 0) setCi(audios.length - 1);
+
+    console.log(audios);
   }, [ci, audios]);
 
   const bind = useDrag(({ down, movement: [mx, my] }) => {
@@ -94,7 +96,7 @@ const Voicemail: React.FC<tabProps> = ({}) => {
                 <Wave
                   audio={audio.audioUrl}
                   isBlob={true}
-                  ida={audio.id + "feed"}
+                  ida={audio.id + "inbox"}
                   like={
                     user?.audioLikes?.find((a: string) => a === audio.id)
                       ? true

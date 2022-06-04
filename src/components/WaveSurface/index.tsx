@@ -90,11 +90,12 @@ const Wave: React.FC<propsWave> = ({
     if (wave.current) {
       w.current = WaveSurfer.create({
         container: `#waveform-${ida}`,
+        // container: wave.current,
         waveColor: "#383a3e",
         progressColor: "#5da1fa",
         responsive: true,
         partialRender: true,
-        height: 100,
+        height: 120,
         // mediaControls: true,
         xhr: {
           cache: "default",
@@ -108,6 +109,8 @@ const Wave: React.FC<propsWave> = ({
         },
       });
     }
+
+    return () => w?.current?.destroy();
   }, [wave, audio]);
 
   // useEffect(() => {
@@ -123,6 +126,7 @@ const Wave: React.FC<propsWave> = ({
     if (w) {
       w.current.on("ready", () => {
         // w.current.playPause();
+        w.current.setVolume(1);
         if (init > 0) w.current.play();
         // setPlays(true);
       });

@@ -24,9 +24,11 @@ import {
 
 import "./Feed.css";
 
-interface tabProps {}
+interface tabProps {
+  uniqueId?: boolean;
+}
 
-const Feed: React.FC<tabProps> = ({}) => {
+const Feed: React.FC<tabProps> = ({ uniqueId }) => {
   const { user, setUser } = useContext<any>(UserContext);
   const { audios } = Audios();
   const [ci, setCi] = useState(0);
@@ -88,6 +90,7 @@ const Feed: React.FC<tabProps> = ({}) => {
 
   const bind = useDrag(({ down, movement: [mx, my] }) => {
     // console.log(mx, my);
+    if (uniqueId) return;
     if (!down) {
       if (my > 0) setCi(ci + 1);
       if (my < 0) setCi(ci - 1);
@@ -107,7 +110,11 @@ const Feed: React.FC<tabProps> = ({}) => {
                 className="ion-text-center ion-margin-top full-width"
                 style={{ marginBottom: "auto" }}
               >
-                <h3>{`Scroll up. Listen & reply to talk to someone new.`}</h3>
+                <h3>
+                  {!uniqueId
+                    ? `Scroll up. Listen & reply to talk to someone new.`
+                    : `Someone ent you an audio message.`}
+                </h3>
               </div>
 
               {audio && ci >= 0 && (

@@ -16,6 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 0.5rem;
 }
 
 .waveform-buttons .iconi {
@@ -24,8 +25,8 @@
 }
 
 .waveform-buttons .w-button {
-  width: 2.3rem;
-  height: 2.3rem;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;

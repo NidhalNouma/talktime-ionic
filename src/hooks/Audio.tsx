@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Clipboard } from "@awesome-cordova-plugins/clipboard";
+import { io } from "socket.io-client";
+
 import { URL } from "../constant";
 
 export const Audios = () => {
@@ -8,6 +10,12 @@ export const Audios = () => {
 
   useEffect(() => {
     getAll().then((r) => setAudios(r?.data));
+
+    const socket = io(URL);
+    socket.on("newAudio", (r) => {
+      setAudios((a: any) => [...a, r]);
+      // console.log(r, "socket");
+    });
   }, []);
 
   return { audios };
@@ -15,6 +23,13 @@ export const Audios = () => {
 
 export const Voicemails = (id: string, arr: Array<string>) => {
   const [audios, setAudios] = useState<any>(null);
+
+  useEffect(() => {
+    const socket = io(URL);
+    socket.on("newAudio", (r) => {
+      if (r.replyToUser === id) setAudios((a: any) => [...a, r]);
+    });
+  }, []);
 
   useEffect(() => {
     if (id)
@@ -120,7 +135,7 @@ function blobToBase64(blob: Blob) {
 }
 
 export function copyToClipboard(text: String, done: Function) {
-  const getUrl = `${URL + "/feed/"}${text}`;
+  const getUrl = `${URL + "/f-url/"}${text}`;
   Clipboard.copy(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");

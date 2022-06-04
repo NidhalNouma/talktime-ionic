@@ -3,6 +3,19 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
+const server = http.createServer(app);
+
+var { Server } = require("socket.io");
+const io = new Server(server, {
+  pingTimeout: 7000,
+  pingInterval: 3000,
+  cors: {
+    origin: "*",
+  },
+});
+
+module.exports = io;
+
 app.use(cors());
 const port = process.argv[2] || 8080;
 
@@ -62,19 +75,10 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
-const server = http.createServer(app);
-
-var socket = require("socket.io")(server, {
-  pingTimeout: 7000,
-  pingInterval: 3000,
-  cors: {
-    origin: "*",
-  },
-});
-socket.on("connection", onconnection);
+io.on("connection", onconnection);
 
 function onconnection(peer) {
-  console.log(peer.id);
+  // console.log(peer.id);
 
   var send = peer.send;
   peer.send = function () {
@@ -95,13 +99,15 @@ function onconnection(peer) {
     }
   }
 
-  console.log(hosts);
+  // console.log(hosts);
 
   peer.on("disconnect", () => onclose(peer));
   peer.on("error", () => onclose(peer));
   peer.on("message", onmessage.bind(peer));
   count += 1;
   broadcast(JSON.stringify({ type: "count", data: count }), hostId);
+
+  // peer
 }
 
 function onclose(p) {
@@ -199,3 +205,8 @@ function broadcast(message, hostId) {
 server.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+// function getSocketIo() {
+//   return socket;
+// }
+module.exports = io;
