@@ -62,8 +62,9 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
           // if (id) history.goBack();
           // else {
           //   setRecording(false);
-          //   history.push("/share-audio");
+          // history.push("/share-audio");
           // }
+          if (uniqueId) history.push("/record");
         });
       });
     }
@@ -92,8 +93,8 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
     // console.log(mx, my);
     if (uniqueId) return;
     if (!down) {
-      if (my > 0) setCi(ci + 1);
-      if (my < 0) setCi(ci - 1);
+      if (my > 0) setCi(ci - 1);
+      if (my < 0) setCi(ci + 1);
     }
     // api.start({ x: down ? mx : 0, y: down ? my : 0, immediate: down });
   });
@@ -112,8 +113,11 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
               >
                 <h3>
                   {!uniqueId
-                    ? `Scroll up. Listen & reply to talk to someone new.`
-                    : `Someone ent you an audio message.`}
+                    ? `${
+                        audios?.length > 0 ? ci + 1 + "/" + audios?.length : 0
+                      } public messages.`
+                    : // ? `Scroll up. Listen & reply to talk to someone new.`
+                      `Someone sent you an audio message.`}
                 </h3>
               </div>
 

@@ -1,15 +1,19 @@
 .wave-div {
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .waveform {
   position: relative;
-  width: 60%;
   /* height: 100px; */
   overflow: hidden;
   margin: auto;
   padding: auto;
+  cursor: pointer;
 }
 
 .waveform-buttons {
@@ -38,4 +42,31 @@
 .waveform-buttons .w-button-c {
   background-color: var(--ion-color-primary);
   border: 1px solid #000;
+}
+
+.overlay-div {
+  position: relative;
+  cursor: pointer;
+  width: 60%;
+}
+
+.overlay-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.1); */
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  z-index: 100;
+
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.overlay-btn .icon-o {
+  width: 80px;
+  height: 80px;
 }

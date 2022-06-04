@@ -27,7 +27,7 @@ const Talk: React.FC<tabProps> = ({}) => {
             className="ion-text-center ion-margin-top full-width"
             style={{ marginBottom: "auto" }}
           >
-            {<h3>{"Copy and share link to gather feedback."}</h3>}
+            {<h3>{"Tap 'Copy link' then share it to gather feedback."}</h3>}
           </div>
 
           <Fragment>
@@ -55,7 +55,7 @@ const Talk: React.FC<tabProps> = ({}) => {
                   openToast(message, type)
                 )
               }
-              name={"Copy Link"}
+              name={"Copy link"}
             />
           </Fragment>
         </div>

@@ -69,8 +69,8 @@ const Voicemail: React.FC<tabProps> = ({}) => {
   const bind = useDrag(({ down, movement: [mx, my] }) => {
     // console.log(mx, my);
     if (!down) {
-      if (my > 0) setCi(ci + 1);
-      if (my < 0) setCi(ci - 1);
+      if (my > 0) setCi(ci - 1);
+      if (my < 0) setCi(ci + 1);
     }
     // api.start({ x: down ? mx : 0, y: down ? my : 0, immediate: down });
   });
@@ -89,10 +89,10 @@ const Voicemail: React.FC<tabProps> = ({}) => {
               >
                 <h3>{`${
                   audios?.length > 0 ? ci + 1 + "/" + audios?.length : 0
-                } messages.`}</h3>
+                } private messages.`}</h3>
               </div>
 
-              {audio && ci >= 0 && (
+              {audio && ci >= 0 && audios.length > 0 && (
                 <Wave
                   audio={audio.audioUrl}
                   isBlob={true}
@@ -134,7 +134,7 @@ const Voicemail: React.FC<tabProps> = ({}) => {
                   }}
                 />
               )}
-              {audio && (
+              {audio && audios.length > 0 && (
                 <ReplyButton
                   onClick={() => {
                     audio && setRecord(1);

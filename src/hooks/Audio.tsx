@@ -135,7 +135,7 @@ function blobToBase64(blob: Blob) {
 }
 
 export function copyToClipboard(text: String, done: Function) {
-  const getUrl = `${URL + "/f-url/"}${text}`;
+  const getUrl = `${URL + "/s/"}${text}`;
   Clipboard.copy(getUrl).then(
     function () {
       console.log("Async: Copying to clipboard was successful!");

@@ -103,7 +103,7 @@ const Wave: React.FC<propsWave> = ({
         waveColor: "#383a3e",
         progressColor: "#5da1fa",
         responsive: true,
-        partialRender: true,
+        // partialRender: true,
         height: 120,
         // mediaControls: true,
         xhr: {
@@ -153,12 +153,24 @@ const Wave: React.FC<propsWave> = ({
   return (
     <React.Fragment>
       <div className="wave-div">
-        <div
-          // onClick={() => w.current?.play()}
-          id={`waveform-${ida}`}
-          className="waveform"
-          ref={wave}
-        ></div>
+        <div className="overlay-div">
+          <div
+            onClick={() => w.current?.play()}
+            id={`waveform-${ida}`}
+            className="waveform"
+            ref={wave}
+          ></div>
+
+          {init === 0 && (
+            <div className="overlay-btn">
+              <IonIcon
+                icon={plays ? pause : play}
+                color="medium"
+                className="icon-o"
+              />
+            </div>
+          )}
+        </div>
         {/* <audio
           id={`audio-${ida}`}
           ref={audioRef}
@@ -166,50 +178,55 @@ const Wave: React.FC<propsWave> = ({
           controls
           style={{ display: "none" }}
         ></audio> */}
-        <div className="waveform-buttons">
-          {like !== undefined && (
-            <button className="w-button" onClick={() => onLike && onLike()}>
+        {init > 0 && (
+          <div className="waveform-buttons">
+            {like !== undefined && (
+              <button className="w-button" onClick={() => onLike && onLike()}>
+                <IonIcon
+                  icon={like ? thumbsUp : thumbsUpOutline}
+                  color="medium"
+                  className="iconi"
+                />
+              </button>
+            )}
+            <button className="w-button" onClick={() => setPlays(!plays)}>
               <IonIcon
-                icon={like ? thumbsUp : thumbsUpOutline}
+                icon={plays ? pause : play}
                 color="medium"
                 className="iconi"
               />
             </button>
-          )}
-          <button className="w-button" onClick={() => setPlays(!plays)}>
-            <IonIcon
-              icon={plays ? pause : play}
-              color="medium"
-              className="iconi"
-            />
-          </button>
-          {deletee !== undefined && (
-            <button className="w-button" onClick={() => onDelete && onDelete()}>
-              <IonIcon icon={trashOutline} color="medium" className="iconi" />
-            </button>
-          )}
-          {flaged !== undefined && (
-            <button className="w-button" onClick={() => onFlag && onFlag()}>
-              <IonIcon
-                icon={flaged ? flag : flagOutline}
-                color="medium"
-                className="iconi"
-              />
-            </button>
-          )}
-          {dislike !== undefined && (
-            <button
-              className="w-button"
-              onClick={() => onDislike && onDislike()}
-            >
-              <IonIcon
-                icon={dislike ? thumbsDown : thumbsDownOutline}
-                color="medium"
-                className="iconi"
-              />
-            </button>
-          )}
-        </div>
+            {deletee !== undefined && (
+              <button
+                className="w-button"
+                onClick={() => onDelete && onDelete()}
+              >
+                <IonIcon icon={trashOutline} color="medium" className="iconi" />
+              </button>
+            )}
+            {flaged !== undefined && (
+              <button className="w-button" onClick={() => onFlag && onFlag()}>
+                <IonIcon
+                  icon={flaged ? flag : flagOutline}
+                  color="medium"
+                  className="iconi"
+                />
+              </button>
+            )}
+            {dislike !== undefined && (
+              <button
+                className="w-button"
+                onClick={() => onDislike && onDislike()}
+              >
+                <IonIcon
+                  icon={dislike ? thumbsDown : thumbsDownOutline}
+                  color="medium"
+                  className="iconi"
+                />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </React.Fragment>
   );

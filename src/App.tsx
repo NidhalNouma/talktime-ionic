@@ -83,26 +83,26 @@ const App: React.FC = () => {
                 <Route exact path="/host">
                   <Host incall={incall} setIncall={setIncall} />
                 </Route>
-                <Route exact path="/talk">
+                <Route exact path="/record">
                   <Talk />
                 </Route>
-                <Route exact path="/share-audio">
+                <Route exact path="/share">
                   <ShareAudio />
                 </Route>
                 <Route exact path="/talk/:id">
                   <Talk />
                 </Route>
-                <Route exact path="/feed">
+                <Route exact path="/listen">
                   <Feed />
                 </Route>
-                <Route exact path="/f-url/:id">
+                <Route exact path="/s/:id">
                   <Feed uniqueId={true} />
                 </Route>
-                <Route exact path="/voicemail">
+                <Route exact path="/inbox">
                   <Voicemail />
                 </Route>
                 <Route exact path="/">
-                  <Redirect to="/talk" />
+                  <Redirect to="/record" />
                 </Route>
               </IonRouterOutlet>
               <IonTabBar
@@ -117,23 +117,23 @@ const App: React.FC = () => {
                 <IonIcon icon={call} />
                 <IonLabel>Live</IonLabel>
               </IonTabButton> */}
-                <IonTabButton tab="Talk" href="/talk">
+                <IonTabButton tab="Talk" href="/record">
                   <IonIcon icon={micOutline} />
                   <IonLabel>Record</IonLabel>
                 </IonTabButton>
                 <IonTabButton
                   tab="Share-audio"
-                  href="/share-audio"
+                  href="/share"
                   style={{ display: `${!user?.audio ? "none" : "flex"}` }}
                 >
                   <IonIcon icon={arrowRedoOutline} />
                   <IonLabel>Share</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="Listen" href="/feed">
+                <IonTabButton tab="Listen" href="/listen">
                   <IonIcon icon={volumeMediumOutline} />
                   <IonLabel>Listen</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="Voicemail" href="/voicemail">
+                <IonTabButton tab="Voicemail" href="/inbox">
                   <IonIcon icon={mailOutline} />
                   <IonLabel>Inbox</IonLabel>
                 </IonTabButton>

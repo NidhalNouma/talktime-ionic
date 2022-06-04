@@ -52,7 +52,7 @@ const Talk: React.FC<tabProps> = ({}) => {
           if (id) history.goBack();
           else {
             setRecording(false);
-            history.push("/share-audio");
+            history.push("/share");
           }
         });
       });

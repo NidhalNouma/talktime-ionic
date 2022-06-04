@@ -69,11 +69,14 @@ const flagAudio = async (userId, audioId, flag) => {
   return r;
 };
 
-const dislikeAudio = async (userId, audioId) => {
+const dislikeAudio = async (userId, audioId, dislike) => {
   console.log("Disliking audio ...");
-  const r = await addToArray(collName, userId, "audioDislikes", audioId);
-  const r1 = await deleteFromArray(collName, userId, "audioLikes", audioId);
-  return { r, r1 };
+  let r = null;
+  if (dislike) {
+    r = await addToArray(collName, userId, "audioDislikes", audioId);
+    await deleteFromArray(collName, userId, "audioLikes", audioId);
+  } else r = await deleteFromArray(collName, userId, "audioDislikes", audioId);
+  return r;
 };
 
 const newVoiceMail = async (userId, voiceMailId) => {

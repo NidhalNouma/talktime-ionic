@@ -16,6 +16,7 @@ const {
   getDoc,
   getDocs,
   query,
+  orderBy,
   where,
   updateDoc,
   deleteDoc,
@@ -106,7 +107,7 @@ async function get(document, colId) {
 }
 
 async function getAll(coll) {
-  const q = query(collection(db, coll));
+  const q = query(collection(db, coll), orderBy("createdAt", "desc"));
   const r = [];
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
@@ -132,7 +133,11 @@ async function getAllIn(coll, nameDoc, arr) {
 }
 
 async function getAllFrom(coll, nameDoc, val) {
-  const q = query(collection(db, coll), where(nameDoc, "==", val));
+  const q = query(
+    collection(db, coll),
+    orderBy("createdAt", "desc"),
+    where(nameDoc, "==", val)
+  );
   const r = [];
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
