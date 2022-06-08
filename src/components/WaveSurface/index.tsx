@@ -12,6 +12,7 @@ import {
   thumbsUpOutline,
   thumbsDownOutline,
   flagOutline,
+  arrowRedoOutline,
 } from "ionicons/icons";
 
 import "./index.css";
@@ -26,10 +27,12 @@ interface propsWave {
   like?: boolean | undefined;
   dislike?: boolean | undefined;
   flaged?: boolean | undefined;
+  copy?: boolean | undefined;
   onDelete?: Function;
   onLike?: Function;
   onDislike?: Function;
   onFlag?: Function;
+  onCopy?: Function;
 }
 
 let init = 0;
@@ -65,10 +68,12 @@ const Wave: React.FC<propsWave> = ({
   like,
   dislike,
   flaged,
+  copy,
   onDelete,
   onLike,
   onDislike,
   onFlag,
+  onCopy,
 }) => {
   const wave = useRef<any>(null);
   const [blob, setBlob] = useState<any>(null);
@@ -76,12 +81,6 @@ const Wave: React.FC<propsWave> = ({
   const [plays, setPlays] = useState(false);
 
   const w = useRef<any>(null);
-  // const audioRef = useRef<any>(null);
-
-  // useEffect(() => {
-  //   if (plays && audioRef.current) audioRef.current.play();
-  //   else if (!plays && audioRef.current) audioRef.current.pause();
-  // }, [plays, audioRef]);
 
   useEffect(() => {
     return () => {
@@ -89,14 +88,6 @@ const Wave: React.FC<propsWave> = ({
       w.current?.unAll();
     };
   }, []);
-
-  useEffect(() => {
-    if (w.current) {
-      if (plays && !w.current.isPlaying()) {
-        w.current.play();
-      } else if (!plays && w.current.isPlaying()) w.current.pause();
-    }
-  }, [plays, w.current]);
 
   useEffect(() => {
     if (w.current) {
@@ -139,13 +130,7 @@ const Wave: React.FC<propsWave> = ({
           credentials: "include",
         },
       });
-    }
 
-    return () => w?.current?.destroy();
-  }, [wave, audio]);
-
-  useEffect(() => {
-    if (w) {
       w.current.on("ready", () => {
         // w.current.playPause();
         // w.current.setVolume(1);
@@ -173,7 +158,13 @@ const Wave: React.FC<propsWave> = ({
       });
     }
 
-    if (w && blob) w.current.load(blob);
+    return () => w.current?.destroy();
+  }, [wave, audio]);
+
+  useEffect(() => {
+    if (w.current && blob) {
+      w.current.load(blob);
+    }
   }, [w, blob]);
 
   return (
@@ -215,7 +206,23 @@ const Wave: React.FC<propsWave> = ({
                 />
               </button>
             )}
-            <button className="w-button" onClick={() => setPlays(!plays)}>
+            {copy !== undefined && (
+              <button className="w-button" onClick={() => onCopy && onCopy()}>
+                <IonIcon
+                  icon={arrowRedoOutline}
+                  color="medium"
+                  className="iconi"
+                />
+              </button>
+            )}
+
+            <button
+              className="w-button"
+              onClick={() => {
+                w.current?.playPause();
+                setPlays(!plays);
+              }}
+            >
               <IonIcon
                 icon={plays ? pause : play}
                 color="medium"

@@ -18,7 +18,7 @@ import {
 import { upload, Voicemails, copyToClipboard } from "../hooks/Audio";
 import { CRecord } from "../hooks/Record";
 
-import { useDrag } from "@use-gesture/react";
+import { useDrag, useScroll } from "@use-gesture/react";
 
 import { ShowToast } from "../App";
 import "./Voicemail.css";
@@ -30,6 +30,10 @@ const Voicemail: React.FC<tabProps> = ({}) => {
   let history = useHistory();
   const [ci, setCi] = useState(0);
   const { user, setUser } = useContext<any>(UserContext);
+
+  useEffect(() => {
+    if (user) localStorage.setItem("user.voicemail", user.voicemails?.length);
+  }, [user]);
 
   const { audios } = Voicemails(user?.id, user?.voicemail);
   const [audio, setAudio] = useState<any>(null);
@@ -65,6 +69,32 @@ const Voicemail: React.FC<tabProps> = ({}) => {
 
     // console.log(audios);
   }, [ci, audios]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", checkKey, false);
+
+    return () => {
+      document.removeEventListener("keydown", checkKey, false);
+    };
+  }, []);
+
+  function checkKey(e: any) {
+    e = e || window.event;
+
+    if (e.keyCode == "38") {
+      // up arrow
+      setCi((v) => v - 1);
+    } else if (e.keyCode == "40") {
+      // down arrow
+      setCi((v) => v + 1);
+    } else if (e.keyCode == "37") {
+      // left arrow
+      setCi((v) => v - 1);
+    } else if (e.keyCode == "39") {
+      // right arrow
+      setCi((v) => v + 1);
+    }
+  }
 
   const bind = useDrag(({ down, movement: [mx, my] }) => {
     // console.log(mx, my);
@@ -131,6 +161,12 @@ const Voicemail: React.FC<tabProps> = ({}) => {
                     const r = await getUser(user.id);
                     setUser(r?.data);
                     openToast(!d ? "Disliked" : "Undisliked", 1);
+                  }}
+                  copy={true}
+                  onCopy={() => {
+                    copyToClipboard(audio.id, (message: string, type: Number) =>
+                      openToast(message, type)
+                    );
                   }}
                 />
               )}

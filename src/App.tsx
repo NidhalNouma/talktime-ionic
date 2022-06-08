@@ -66,6 +66,7 @@ const App: React.FC = () => {
   }
 
   const { user, setUser } = User();
+  const avm = localStorage.getItem("user.voicemail");
 
   return (
     <IonApp>
@@ -134,7 +135,13 @@ const App: React.FC = () => {
                   <IonLabel>Listen</IonLabel>
                 </IonTabButton>
                 <IonTabButton tab="Voicemail" href="/inbox">
-                  <IonIcon icon={mailOutline} />
+                  <IonIcon
+                    icon={
+                      avm && user?.voicemail?.length > avm
+                        ? mailUnreadOutline
+                        : mailOutline
+                    }
+                  />
                   <IonLabel>Inbox</IonLabel>
                 </IonTabButton>
               </IonTabBar>

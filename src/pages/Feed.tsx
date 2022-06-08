@@ -11,7 +11,7 @@ import Record from "../components/Record";
 import { upload, Audios, copyToClipboard } from "../hooks/Audio";
 import { CRecord } from "../hooks/Record";
 
-import { useDrag } from "@use-gesture/react";
+import { useDrag, useScroll } from "@use-gesture/react";
 
 import { ShowToast } from "../App";
 import {
@@ -70,7 +70,32 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
     }
   }, [audioUrl]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    document.addEventListener("keydown", checkKey, false);
+
+    return () => {
+      document.removeEventListener("keydown", checkKey, false);
+    };
+  }, []);
+
+  function checkKey(e: any) {
+    e = e || window.event;
+    if (uniqueId) return;
+
+    if (e.keyCode == "38") {
+      // up arrow
+      setCi((v) => v - 1);
+    } else if (e.keyCode == "40") {
+      // down arrow
+      setCi((v) => v + 1);
+    } else if (e.keyCode == "37") {
+      // left arrow
+      setCi((v) => v - 1);
+    } else if (e.keyCode == "39") {
+      // right arrow
+      setCi((v) => v + 1);
+    }
+  }
 
   useEffect(() => {
     if (audios?.length > 0 && id) {
@@ -169,6 +194,12 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
                     const r = await getUser(user.id);
                     setUser(r?.data);
                     openToast(!d ? "Disliked" : "Undisliked", 1);
+                  }}
+                  copy={true}
+                  onCopy={() => {
+                    copyToClipboard(audio.id, (message: string, type: Number) =>
+                      openToast(message, type)
+                    );
                   }}
                 />
               )}

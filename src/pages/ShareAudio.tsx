@@ -27,7 +27,7 @@ const Talk: React.FC<tabProps> = ({}) => {
             className="ion-text-center ion-margin-top full-width"
             style={{ marginBottom: "auto" }}
           >
-            {<h3>{"Tap 'Copy link' then share it to gather feedback."}</h3>}
+            {<h3>{"Tap 'Copy link' then share to gather feedback."}</h3>}
           </div>
 
           <Fragment>
