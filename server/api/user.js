@@ -19,7 +19,7 @@ app.post("/get", async function (req, res) {
   const { id } = req.body;
   if (!id) return res.send({ err: "Missing id" });
   const r = await user.getUser(id);
-  if (r.audio) {
+  if (r?.audio) {
     r["audioDoc"] = await audio.getAudio(r.audio);
   }
   res.json(r);

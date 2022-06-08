@@ -13,7 +13,7 @@ export const UserComponent: React.FC<tabProps> = ({ value, children }) => (
 );
 
 export const User = () => {
-  const [id, setId] = useState(window.localStorage.getItem("id"));
+  const [id, setId] = useState(window.localStorage.getItem("id-u"));
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
