@@ -30,10 +30,11 @@ interface tabProps {
 
 const Feed: React.FC<tabProps> = ({ uniqueId }) => {
   const { user, setUser } = useContext<any>(UserContext);
-  const { audios } = Audios();
   const [ci, setCi] = useState(0);
   const [audio, setAudio] = useState<any>(null);
 
+  const { audios } = Audios();
+  console.log(audios);
   type params = {
     id: string;
   };

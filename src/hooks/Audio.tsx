@@ -14,7 +14,11 @@ export const Audios = () => {
     const socket = io(URL);
     socket.on("newAudio", (r) => {
       setAudios((a: any) => [...a, r]);
-      // console.log(r, "socket");
+      // getAll().then((r) => {
+      //   setAudios(r?.data);
+      //   setCi((ci: any) => ci + 1);
+      // });
+      console.log(r, "socket");
     });
   }, []);
 

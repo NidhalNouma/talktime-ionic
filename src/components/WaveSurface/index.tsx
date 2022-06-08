@@ -225,7 +225,6 @@ const Wave: React.FC<propsWave> = ({
               className="w-button"
               onClick={() => {
                 w.current?.playPause();
-                setPlays((v) => !v);
               }}
             >
               <IonIcon
