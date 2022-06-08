@@ -33,6 +33,8 @@ interface propsWave {
   onDislike?: Function;
   onFlag?: Function;
   onCopy?: Function;
+
+  setIsReady?: Function;
 }
 
 let init = 0;
@@ -74,26 +76,31 @@ const Wave: React.FC<propsWave> = ({
   onDislike,
   onFlag,
   onCopy,
+  setIsReady,
 }) => {
   const wave = useRef<any>(null);
   const [blob, setBlob] = useState<any>(null);
-  const [speed, setSpeed] = useState(1);
   const [plays, setPlays] = useState(false);
 
   const w = useRef<any>(null);
 
-  useEffect(() => {
-    return () => {
-      w.current?.destroy();
-      w.current?.unAll();
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //      w.current?.destroy();
+  //      w.current?.unAll();
+  //   };
+  // }, []);
 
   useEffect(() => {
-    if (w.current) {
-      w.current.setPlaybackRate(speed);
-    }
-  }, [speed]);
+    console.log("", ida);
+
+    return () => {
+      w.current?.empty();
+      w.current?.destroy();
+      w.current?.unAll();
+      setPlays(false);
+    };
+  }, [ida]);
 
   useEffect(() => {
     if (isBlob)
@@ -103,11 +110,7 @@ const Wave: React.FC<propsWave> = ({
           let objectURL = URL.createObjectURL(blob);
           setBlob(objectURL);
         });
-    return () => {
-      w?.current?.destroy();
-      setPlays(false);
-    };
-  }, [audio]);
+  }, [audio, isBlob]);
 
   useEffect(() => {
     if (wave.current) {
@@ -132,16 +135,15 @@ const Wave: React.FC<propsWave> = ({
       });
 
       w.current.on("ready", () => {
-        // w.current.playPause();
-        // w.current.setVolume(1);
+        console.log("ready wave ...");
+        setIsReady && setIsReady(true);
         if (init > 0) w.current.play();
-        // setPlays(true);
       });
 
       w.current.on("error", (err: any) => console.log("wave err ... ", err));
       w.current.on("destroy", () => {
-        w.current = null;
         console.log("destroy wave ...");
+        setIsReady && setIsReady(false);
       });
 
       w.current.on("finish", () => {
@@ -149,17 +151,20 @@ const Wave: React.FC<propsWave> = ({
       });
 
       w.current.on("pause", () => {
-        if (plays) setPlays(false);
+        setPlays(false);
       });
 
       w.current.on("play", () => {
-        if (!plays) setPlays(true);
+        setPlays(true);
         init++;
       });
     }
 
-    return () => w.current?.destroy();
-  }, [wave, audio]);
+    // return () => {
+    //   // w.current?.destroy();
+    //   setPlays(false);
+    // };
+  }, [wave, ida]);
 
   useEffect(() => {
     if (w.current && blob) {
@@ -220,7 +225,7 @@ const Wave: React.FC<propsWave> = ({
               className="w-button"
               onClick={() => {
                 w.current?.playPause();
-                setPlays(!plays);
+                setPlays((v) => !v);
               }}
             >
               <IonIcon

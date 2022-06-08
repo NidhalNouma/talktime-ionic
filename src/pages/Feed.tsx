@@ -42,6 +42,8 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
   const { openToast } = useContext(ShowToast);
   const [li, setLi] = useState(id ? false : true);
 
+  const [ready, setIsReady] = useState(false);
+
   const {
     time,
     stream,
@@ -76,11 +78,11 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
     return () => {
       document.removeEventListener("keydown", checkKey, false);
     };
-  }, []);
+  }, [ready]);
 
   function checkKey(e: any) {
     e = e || window.event;
-    if (uniqueId) return;
+    if (uniqueId || !ready) return;
 
     if (e.keyCode == "38") {
       // up arrow
@@ -116,7 +118,7 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
 
   const bind = useDrag(({ down, movement: [mx, my] }) => {
     // console.log(mx, my);
-    if (uniqueId) return;
+    if (uniqueId || !ready) return;
     if (!down) {
       if (my > 0) setCi(ci - 1);
       if (my < 0) setCi(ci + 1);
@@ -201,6 +203,7 @@ const Feed: React.FC<tabProps> = ({ uniqueId }) => {
                       openToast(message, type)
                     );
                   }}
+                  setIsReady={setIsReady}
                 />
               )}
 

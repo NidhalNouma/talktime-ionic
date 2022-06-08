@@ -38,6 +38,8 @@ const Voicemail: React.FC<tabProps> = ({}) => {
   const { audios } = Voicemails(user?.id, user?.voicemail);
   const [audio, setAudio] = useState<any>(null);
 
+  const [ready, setIsReady] = useState(false);
+
   const {
     time,
     stream,
@@ -76,10 +78,12 @@ const Voicemail: React.FC<tabProps> = ({}) => {
     return () => {
       document.removeEventListener("keydown", checkKey, false);
     };
-  }, []);
+  }, [ready]);
 
   function checkKey(e: any) {
     e = e || window.event;
+
+    if (!ready) return;
 
     if (e.keyCode == "38") {
       // up arrow
@@ -97,6 +101,7 @@ const Voicemail: React.FC<tabProps> = ({}) => {
   }
 
   const bind = useDrag(({ down, movement: [mx, my] }) => {
+    if (!ready) return;
     // console.log(mx, my);
     if (!down) {
       if (my > 0) setCi(ci - 1);
@@ -168,6 +173,7 @@ const Voicemail: React.FC<tabProps> = ({}) => {
                       openToast(message, type)
                     );
                   }}
+                  setIsReady={setIsReady}
                 />
               )}
               {audio && audios.length > 0 && (
