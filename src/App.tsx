@@ -22,7 +22,7 @@ import {
 import { IonReactRouter } from "@ionic/react-router";
 import Live from "./pages/Live";
 import Host from "./pages/Host";
-import Talk from "./pages/Talk";
+import Record from "./pages/Record";
 import ShareAudio from "./pages/ShareAudio";
 import Feed from "./pages/Feed";
 import Voicemail from "./pages/Voicemail";
@@ -65,60 +65,60 @@ const App: React.FC = () => {
     setOpen(true);
   }
 
-  const { user, setUser } = User();
+  // const { user, setUser } = User();
   const avm = localStorage.getItem("user.voicemail");
 
   return (
     <IonApp>
       <IonReactRouter>
-        <UserComponent value={{ user, setUser }}>
-          <ShowToast.Provider value={{ openToast }}>
-            <IonTabs>
-              <IonRouterOutlet>
-                <Route exact path="/live">
-                  <Live incall={incall} setIncall={setIncall} />
-                </Route>
-                <Route exact path="/live/:id">
-                  <Live incall={incall} setIncall={setIncall} />
-                </Route>
-                <Route exact path="/host">
-                  <Host incall={incall} setIncall={setIncall} />
-                </Route>
-                <Route exact path="/record">
-                  <Talk />
-                </Route>
-                <Route exact path="/share">
-                  <ShareAudio />
-                </Route>
-                <Route exact path="/talk/:id">
-                  <Talk />
-                </Route>
-                <Route exact path="/listen">
-                  <Feed />
-                </Route>
-                <Route exact path="/s/:id">
-                  <Feed uniqueId={true} />
-                </Route>
-                <Route exact path="/inbox">
-                  <Voicemail />
-                </Route>
-                <Route exact path="/">
-                  <Redirect to="/record" />
-                </Route>
-              </IonRouterOutlet>
-              <IonTabBar
-                slot="bottom"
-                style={{ display: `${incall ? "none" : "flex"}` }}
-              >
-                {/* <IonTabButton tab="Host" href="/host">
+        {/* <UserComponent value={{ user, setUser }}> */}
+        <ShowToast.Provider value={{ openToast }}>
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route exact path="/talk">
+                <Live incall={incall} setIncall={setIncall} />
+              </Route>
+              <Route exact path="/talk/:id">
+                <Live incall={incall} setIncall={setIncall} />
+              </Route>
+              <Route exact path="/host">
+                <Host incall={incall} setIncall={setIncall} />
+              </Route>
+              <Route exact path="/record">
+                <Record />
+              </Route>
+              <Route exact path="/share">
+                <ShareAudio />
+              </Route>
+              <Route exact path="/record/:id">
+                <Record />
+              </Route>
+              <Route exact path="/listen">
+                <Feed />
+              </Route>
+              <Route exact path="/s/:id">
+                <Feed uniqueId={true} />
+              </Route>
+              <Route exact path="/inbox">
+                <Voicemail />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/talk" />
+              </Route>
+            </IonRouterOutlet>
+            <IonTabBar
+              slot="bottom"
+              style={{ display: `${incall ? "none" : "flex"}` }}
+            >
+              <IonTabButton tab="Talk" href="/talk">
+                <IonIcon icon={call} />
+                <IonLabel>Talk</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Host" href="/host">
                 <IonIcon icon={people} />
                 <IonLabel>Host</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="Live" href="/live">
-                <IonIcon icon={call} />
-                <IonLabel>Live</IonLabel>
-              </IonTabButton> */}
-                <IonTabButton tab="Talk" href="/record">
+              {/* <IonTabButton tab="Record" href="/record">
                   <IonIcon icon={micOutline} />
                   <IonLabel>Record</IonLabel>
                 </IonTabButton>
@@ -143,17 +143,17 @@ const App: React.FC = () => {
                     }
                   />
                   <IonLabel>Inbox</IonLabel>
-                </IonTabButton>
-              </IonTabBar>
-            </IonTabs>
-            <Toast
-              open={open}
-              close={() => setOpen(false)}
-              message={message}
-              type={toastType}
-            />
-          </ShowToast.Provider>
-        </UserComponent>
+                </IonTabButton> */}
+            </IonTabBar>
+          </IonTabs>
+          <Toast
+            open={open}
+            close={() => setOpen(false)}
+            message={message}
+            type={toastType}
+          />
+        </ShowToast.Provider>
+        {/* </UserComponent> */}
       </IonReactRouter>
     </IonApp>
   );

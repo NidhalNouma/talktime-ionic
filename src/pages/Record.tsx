@@ -15,7 +15,7 @@ import { upload, deleteAudio, copyToClipboard } from "../hooks/Audio";
 import { UserContext, getUser } from "../hooks/User";
 
 import { ShowToast } from "../App";
-import "./Talk.css";
+import "./Record.css";
 
 interface tabProps {}
 

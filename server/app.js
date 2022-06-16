@@ -62,7 +62,7 @@ app.post("/host/d/:id", (req, res) => {
   res.send(r);
 });
 
-app.get("/live/:id", (req, res) => {
+app.get("/talk/:id", (req, res) => {
   const id = req.params.id;
 
   const host = arrHosts.find((host) => host === id);
